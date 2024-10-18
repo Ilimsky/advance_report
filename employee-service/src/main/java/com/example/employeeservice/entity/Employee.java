@@ -9,7 +9,6 @@ import lombok.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 @Getter
 @Setter
 public class Employee {
@@ -18,6 +17,4 @@ public class Employee {
     private Long id;
 
     private String name;
-    private String positionId;
-    private String deptId;
 }
