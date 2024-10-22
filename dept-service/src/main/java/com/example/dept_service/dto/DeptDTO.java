@@ -1,4 +1,4 @@
-package com.example.employeeservice.dto;
+package com.example.dept_service.dto;
 
 import lombok.*;
 

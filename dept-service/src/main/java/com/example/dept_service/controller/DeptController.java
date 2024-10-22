@@ -4,11 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.example.dept_service.dto.DeptDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.dept_service.dto.DeptDTO;
 import com.example.dept_service.exception.DeptNotFoundException;
 import com.example.dept_service.service.DeptServiceImpl;
 

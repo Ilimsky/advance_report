@@ -16,12 +16,10 @@ import com.example.employeeservice.service.EmployeeServiceImpl;
 @CrossOrigin(origins = "*")
 public class EmployeeController {
     private final EmployeeServiceImpl employeeServiceImpl; 
-
     @Autowired
     public EmployeeController(EmployeeServiceImpl employeeServiceImpl){
         this.employeeServiceImpl = employeeServiceImpl;
     }
-
     @PostMapping("/employee")
     public ResponseEntity<EmployeeDTO> createEmployee(@RequestBody EmployeeDTO employeeDTO) {
         EmployeeDTO createEmployeeDTO = employeeServiceImpl.createEmployee(employeeDTO);
@@ -62,7 +60,6 @@ public class EmployeeController {
         }
     }
 
-
     @DeleteMapping("/employee/{id}")
     public ResponseEntity<EmployeeDTO> deleteEmployeeById(@PathVariable Long id){
         try{
@@ -72,5 +69,4 @@ public class EmployeeController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }

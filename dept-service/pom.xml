@@ -12,7 +12,7 @@
 	<artifactId>dept-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>dept-service</name>
-	<description>Demo project for Spring Boot</description>
+	<description>dept-service</description>
 	<url/>
 	<licenses>
 		<license/>
