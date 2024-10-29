@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../database_helper.dart';
+import '../dept_form.dart';
+import '../helpers/db_helper.dart';
+import '../models/dept.dart';
 
 class ReferenceScreen extends StatefulWidget {
   @override
@@ -7,39 +9,89 @@ class ReferenceScreen extends StatefulWidget {
 }
 
 class _ReferenceScreenState extends State<ReferenceScreen> {
-  final TextEditingController _branchController = TextEditingController();
-  final DatabaseHelper _databaseHelper = DatabaseHelper();
+  late DatabaseHelper dbHelper;
+  late Future<List<Dept>> depts;
 
-  void _addBranch() async {
-    final branch = _branchController.text;
-    if (branch.isNotEmpty) {
-      await _databaseHelper.insertDepartment(branch); // Сохранение в базу данных
-      print('Добавлен филиал: $branch'); // Для демонстрации
-      _branchController.clear(); // Очистка поля ввода
-    }
+  @override
+  void initState() {
+    super.initState();
+    dbHelper = DatabaseHelper.instance;
+    _refreshDeptList();
+  }
+
+  void _refreshDeptList() {
+    setState(() {
+      depts = dbHelper.readAllDepts();
+    });
+  }
+
+  void _openForm(Dept? dept) async {
+    final result = await showDialog(
+      context: context,
+      builder: (_) => DeptForm(dept: dept),
+    );
+    if (result == true) _refreshDeptList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _branchController,
-              decoration: InputDecoration(
-                labelText: 'Филиал',
-                border: OutlineInputBorder(),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
+        title: const Text('Справочник'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder<List<Dept>>(
+                future: depts,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (snapshot.hasError) {
+                    return Center(child: Text('Error: ${snapshot.error}'));
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Center(child: Text('No depts found'));
+                  }
+
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      final dept = snapshot.data![index];
+
+                      return ListTile(
+                        title: Text(dept.name),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.edit),
+                              onPressed: () => _openForm(dept),
+                            ),
+                            IconButton(
+                              icon: const Icon(Icons.delete),
+                              onPressed: () async {
+                                await dbHelper.delete(dept.id!);
+                                _refreshDeptList();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
               ),
             ),
-          ),
-          SizedBox(width: 10), // Отступ между полем и кнопкой
-          ElevatedButton(
-            onPressed: _addBranch,
-            child: Text('Добавить'),
-          ),
-        ],
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () => _openForm(null),
+              child: const Text('Добавить отдел'),
+            ),
+          ],
+        ),
       ),
     );
   }
