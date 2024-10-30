@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/advance_report.iml" filepath="$PROJECT_DIR$/advance_report.iml" />
-      <module fileurl="file://$PROJECT_DIR$/dept-service/dept-service.iml" filepath="$PROJECT_DIR$/dept-service/dept-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/frontend/frontend.iml" filepath="$PROJECT_DIR$/frontend/frontend.iml" />
       <module fileurl="file://$PROJECT_DIR$/frontend/android/frontend_android.iml" filepath="$PROJECT_DIR$/frontend/android/frontend_android.iml" />
     </modules>

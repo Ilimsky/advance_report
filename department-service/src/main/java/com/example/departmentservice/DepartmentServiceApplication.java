@@ -1,4 +1,4 @@
-package com.example.employeeservice;
+package com.example.departmentservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class EmployeeServiceApplication {
+public class DepartmentServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EmployeeServiceApplication.class, args);
+        SpringApplication.run(DepartmentServiceApplication.class, args);
     }
 
 }
