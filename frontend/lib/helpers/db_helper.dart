@@ -1,6 +1,6 @@
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import '../models/dept.dart';
+import '../models/department.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
@@ -29,34 +29,34 @@ class DatabaseHelper {
 
   Future _createDB(Database db, int version) async {
     await db.execute('''
-    CREATE TABLE depts (
+    CREATE TABLE departments (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       name TEXT NOT NULL
     )
     ''');
   }
 
-  Future<Dept> create(Dept dept) async {
+  Future<Department> create(Department department) async {
     final db = await instance.database;
-    final id = await db.insert('depts', dept.toMap());
-    return Dept(id: id, name: dept.name);
+    final id = await db.insert('departments', department.toMap());
+    return Department(id: id, name: department.name);
   }
 
-  Future<List<Dept>> readAllDepts() async {
+  Future<List<Department>> readAllDepartments() async {
     final db = await instance.database;
-    final result = await db.query('depts');
+    final result = await db.query('departments');
 
-    return result.map((json) => Dept.fromMap(json)).toList();
+    return result.map((json) => Department.fromMap(json)).toList();
   }
 
-  Future<int> update(Dept dept) async {
+  Future<int> update(Department department) async {
     final db = await instance.database;
 
     return db.update(
-      'depts',
-      dept.toMap(),
+      'departments',
+      department.toMap(),
       where: 'id = ?',
-      whereArgs: [dept.id],
+      whereArgs: [department.id],
     );
   }
 
@@ -64,7 +64,7 @@ class DatabaseHelper {
     final db = await instance.database;
 
     return await db.delete(
-      'depts',
+      'departments',
       where: 'id = ?',
       whereArgs: [id],
     );
@@ -84,5 +84,4 @@ class DatabaseHelper {
       return false; // Если произошла ошибка, возвращаем false
     }
   }
-
 }

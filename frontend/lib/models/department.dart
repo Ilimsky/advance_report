@@ -1,8 +1,8 @@
-class Dept {
+class Department {
   final int? id;
   final String name;
 
-  Dept({this.id, required this.name});
+  Department({this.id, required this.name});
 
   Map<String, dynamic> toMap() {
     return {
@@ -11,8 +11,8 @@ class Dept {
     };
   }
 
-  factory Dept.fromMap(Map<String, dynamic> map) {
-    return Dept(
+  factory Department.fromMap(Map<String, dynamic> map) {
+    return Department(
       id: map['id'],
       name: map['name'],
     );

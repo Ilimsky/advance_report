@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import '../models/dept.dart';
+import '../models/department.dart';
 import '../helpers/db_helper.dart';
 
-class DeptForm extends StatefulWidget {
-  final Dept? dept;
+class DepartmentForm extends StatefulWidget {
+  final Department? department;
 
-  const DeptForm({super.key, this.dept});
+  const DepartmentForm({super.key, this.department});
 
   @override
-  _DeptFormState createState() => _DeptFormState();
+  _DepartmentFormState createState() => _DepartmentFormState();
 }
 
-class _DeptFormState extends State<DeptForm> {
+class _DepartmentFormState extends State<DepartmentForm> {
   final nameController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    if (widget.dept != null) {
-      nameController.text = widget.dept!.name;
+    if (widget.department != null) {
+      nameController.text = widget.department!.name;
     }
   }
 
@@ -31,7 +31,7 @@ class _DeptFormState extends State<DeptForm> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(widget.dept == null ? 'Add Dept' : 'Edit Dept'),
+      title: Text(widget.department == null ? 'Add Department' : 'Edit Department'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -51,11 +51,11 @@ class _DeptFormState extends State<DeptForm> {
             final name = nameController.text;
 
             if (name.isNotEmpty) {
-              if (widget.dept == null) {
-                await DatabaseHelper.instance.create(Dept(name: name));
+              if (widget.department == null) {
+                await DatabaseHelper.instance.create(Department(name: name));
               } else {
-                await DatabaseHelper.instance.update(Dept(
-                  id: widget.dept!.id,
+                await DatabaseHelper.instance.update(Department(
+                  id: widget.department!.id,
                   name: name,
                 ));
               }

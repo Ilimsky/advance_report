@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../dept_form.dart';
+import '../department_form.dart';
 import '../helpers/db_helper.dart';
-import '../models/dept.dart';
+import '../models/department.dart';
 
 class ReferenceScreen extends StatefulWidget {
   @override
@@ -10,27 +10,27 @@ class ReferenceScreen extends StatefulWidget {
 
 class _ReferenceScreenState extends State<ReferenceScreen> {
   late DatabaseHelper dbHelper;
-  late Future<List<Dept>> depts;
+  late Future<List<Department>> departments;
 
   @override
   void initState() {
     super.initState();
     dbHelper = DatabaseHelper.instance;
-    _refreshDeptList();
+    _refreshDepartmentList();
   }
 
-  void _refreshDeptList() {
+  void _refreshDepartmentList() {
     setState(() {
-      depts = dbHelper.readAllDepts();
+      departments = dbHelper.readAllDepartments();
     });
   }
 
-  void _openForm(Dept? dept) async {
+  void _openForm(Department? department) async {
     final result = await showDialog(
       context: context,
-      builder: (_) => DeptForm(dept: dept),
+      builder: (_) => DepartmentForm(department: department),
     );
-    if (result == true) _refreshDeptList();
+    if (result == true) _refreshDepartmentList();
   }
 
   @override
@@ -45,36 +45,36 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
         child: Column(
           children: [
             Expanded(
-              child: FutureBuilder<List<Dept>>(
-                future: depts,
+              child: FutureBuilder<List<Department>>(
+                future: departments,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));
                   } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                    return const Center(child: Text('No depts found'));
+                    return const Center(child: Text('No departments found'));
                   }
 
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
-                      final dept = snapshot.data![index];
+                      final department = snapshot.data![index];
 
                       return ListTile(
-                        title: Text(dept.name),
+                        title: Text(department.name),
                         trailing: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             IconButton(
                               icon: const Icon(Icons.edit),
-                              onPressed: () => _openForm(dept),
+                              onPressed: () => _openForm(department),
                             ),
                             IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed: () async {
-                                await dbHelper.delete(dept.id!);
-                                _refreshDeptList();
+                                await dbHelper.delete(department.id!);
+                                _refreshDepartmentList();
                               },
                             ),
                           ],
