@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite_common_ffi/sqflite_ffi.dart';
-import 'app.dart';
+import 'department_screen.dart';
 
 void main() {
-  // Initialize sqflite_common_ffi for desktop platforms
-  sqfliteFfiInit();
-  databaseFactory = databaseFactoryFfi;
+  runApp(MyApp());
+}
 
-  runApp(const MyApp());
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Department App',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: DepartmentScreen(),
+    );
+  }
 }

@@ -15,11 +15,13 @@
         <option value="$PROJECT_DIR$/admin-service/pom.xml" />
         <option value="$PROJECT_DIR$/dept-service/pom.xml" />
         <option value="$PROJECT_DIR$/department-service/pom.xml" />
+        <option value="$PROJECT_DIR$/socket-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/dept-service/pom.xml" />
+        <option value="$PROJECT_DIR$/socket-service/pom.xml" />
       </set>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
