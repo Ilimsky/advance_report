@@ -15,9 +15,10 @@ import java.time.LocalDateTime;
 @Setter
 public class Department {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String name;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Используем автоинкремент для Long
+    private Long id;  // Используем Long как уникальный идентификатор
+
+    private String name;  // Название департамента
 
     private LocalDateTime lastModified;  // Дата и время последнего изменения
 
