@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/report/reports_screen.dart';
 import 'department_screen.dart';
 import 'input_data_screen.dart';
-import 'reports_screen.dart'; // Подключаем экран отчетов
 
 void main() {
   runApp(MyApp());

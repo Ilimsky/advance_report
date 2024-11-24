@@ -11,6 +11,7 @@
         <module name="config-service" />
         <module name="department-service" />
         <module name="api-gateway" />
+        <module name="report-service" />
         <module name="admin-service" />
         <module name="employee-service" />
       </profile>
@@ -29,6 +30,7 @@
       <module name="dept-service" options="-parameters" />
       <module name="employee-service" options="-parameters" />
       <module name="eureka-service" options="-parameters" />
+      <module name="report-service" options="-parameters" />
       <module name="socket-service" options="-parameters" />
     </option>
   </component>

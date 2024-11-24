@@ -45,35 +45,9 @@ class _ReportsScreenState extends State<ReportsScreen> {
     }
   }
 
-  void _syncReports() async {
-    try {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Синхронизация'),
-            content: CircularProgressIndicator(),
-          );
-        },
-      );
-
-      print('Начало синхронизации с сервером...');
-      await apiServiceReport
-          .syncReports(); // Синхронизация данных через apiService
-      print('Синхронизация завершена успешно.');
-
-      _loadReports(); // Перезагружаем данные после синхронизации
-      Navigator.of(context).pop(); // Закрываем диалог
-    } catch (e) {
-      print('Ошибка при синхронизации данных: $e');
-      Navigator.of(context).pop(); // Закрываем диалог при ошибке
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     print('ReportsScreen - Current advanceReports: ${widget.advanceReports}');
-
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
