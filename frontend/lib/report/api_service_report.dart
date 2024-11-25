@@ -3,8 +3,8 @@ import 'package:frontend/report/report.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServiceReport {
-  final String reportsUrl = 'http://localhost:8081/reports';  // Укажите свой URL бэкенда
-  final String reportUrl = 'http://localhost:8081/report';  // Укажите свой URL бэкенда
+  final String reportsUrl = 'http://localhost:8082/reports';  // Укажите свой URL бэкенда
+  final String reportUrl = 'http://localhost:8082/report';  // Укажите свой URL бэкенда
   final http.Client client; // HTTP клиент для отправки запросов
 
   ApiServiceReport({required this.client}); // Инициализация с переданным клиентом
@@ -29,30 +29,33 @@ class ApiServiceReport {
   Future<Report> createReport(Report report) async {
     try {
       final response = await client.post(
-        Uri.parse(reportUrl),
+        Uri.parse(reportUrl),  // Убедитесь, что URL правильный
         headers: <String, String>{
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json',  // Обратите внимание на этот заголовок
         },
-        body: json.encode(report.toJson()),
+        body: json.encode(report.toJson()),  // Конвертируем объект отчета в JSON
       );
 
+      // Логирование ответа сервера
+      print('Ответ от сервера: ${response.body}');
+
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // Если ответ успешен, создаем объект отчета
+        // Если статус 200 или 201, создаем объект отчета из ответа
         final responseData = json.decode(response.body);
-        print('Ответ от сервера: ${response.body}');
-        return Report.fromJson(responseData); // Возвращаем созданный отчет
+        return Report.fromJson(responseData);
       } else {
-        // Выводим подробности о неудачном ответе
+        // Если ответ не успешный, выводим ошибку
         print('Неудачный ответ от сервера: ${response.statusCode}');
         print('Тело ответа: ${response.body}');
         throw Exception('Failed to create report');
       }
     } catch (e) {
-      // Ошибка при отправке запроса
+      // Логирование ошибок
       print('Ошибка при отправке запроса: $e');
       throw Exception('Failed to create report');
     }
   }
+
 
   // Обновление отчета
   Future<Report> updateReport(Report report) async {
@@ -87,21 +90,18 @@ class ApiServiceReport {
     }
 
     for (var report in reportsToSync) {
-      final body = json.encode({
+      // Вместо отправки одиночного объекта теперь создаем массив из одного объекта
+      final body = json.encode([{
         'id': report.id,
         'sequenceNumber': report.sequenceNumber,
-        'lastModified': report.lastModified.toIso8601String(),
-        'synced': true,
-        'newReport': report.newReport,
-        'modified': report.modified,
-      });
+      }]);
 
       print('Синхронизация отчета с ID: ${report.id}, данные: $body');
 
       try {
         final response = await client.post(url, headers: headers, body: body);
         if (response.statusCode == 200) {
-          print('Департамент с ID ${report.id} успешно синхронизирован');
+          print('Отчет с ID ${report.id} успешно синхронизирован');
         } else {
           print('Ошибка при синхронизации отчета с ID ${report.id}: ${response.statusCode}');
           print('Ответ от сервера: ${response.body}');
@@ -112,6 +112,7 @@ class ApiServiceReport {
       }
     }
   }
+
 
 // Удаление отчета
   Future<void> deleteReport(int id) async {
@@ -132,8 +133,10 @@ class ApiServiceReport {
   // Логика получения отчетов, которые нужно синхронизировать
   Future<List<Report>> getUnsyncedReports() async {
     try {
-      final allReports = await getReports();  // Получаем все отчеты
-      return allReports.where((report) => !report.synced).toList(); // Отбираем те, что не синхронизированы
+      final allReports = await getReports();
+      // Фильтруем отчеты по другому критерию, например, ID
+      // Или оставляем все отчеты, если синхронизация применяется ко всем
+      return allReports; // Вернуть все отчеты без фильтрации
     } catch (e) {
       throw Exception('Ошибка при загрузке отчетов: $e');
     }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/report/api_service_report.dart';
+import 'package:frontend/report/report.dart';
 import '../department.dart';
 import '../api_service.dart';
 import 'package:http/http.dart' as http;
@@ -19,6 +21,7 @@ class InputDataScreen extends StatefulWidget {
 
 class _InputDataScreenState extends State<InputDataScreen> {
   late ApiService apiService;
+  late ApiServiceReport apiServiceReport; // Экземпляр для работы с отчетами
   List<Department> departments = [];
   Department? selectedDepartment;
 
@@ -29,6 +32,7 @@ class _InputDataScreenState extends State<InputDataScreen> {
   void initState() {
     super.initState();
     apiService = ApiService(client: http.Client());
+    apiServiceReport = ApiServiceReport(client: http.Client()); // Инициализируем ApiServiceReport
     _loadDepartments();
   }
 
@@ -43,31 +47,34 @@ class _InputDataScreenState extends State<InputDataScreen> {
     }
   }
 
-  void _updateAdvanceReports(String branchName) {
-    // Увеличиваем счетчик выбора филиала
-    int currentCount = widget.branchSelectionCount.update(
-      branchName,
-          (count) => count + 1,
-      ifAbsent: () => 1,
-    );
+  void _updateAdvanceReports(String branchName) async {
+    try {
+      // Формируем sequenceNumber только с названием филиала
+      String sequenceFormatted = "0/${branchName.split('-').last}";
 
-    // Формируем строку для списка
-    String reportEntry = "$currentCount/$branchName";
+      // Создаём новый отчёт
+      final newReport = Report(
+        id: 0,
+        sequenceNumber: sequenceFormatted,
+      );
 
-    // Лог для проверки значений перед добавлением
-    print('InputDataScreen - Adding to advanceReports: $reportEntry');
+      // Отправляем отчёт на сервер
+      Report createdReport = await apiServiceReport.createReport(newReport);
 
-    // Добавляем запись в список "Авансовых отчетов"
-    setState(() {
-      advanceReports.add(reportEntry);  // Добавляем строку отчета
-    });
+      // Добавляем sequenceNumber из ответа сервера в список (если успешно)
+      if (!advanceReports.contains(createdReport.sequenceNumber)) {
+        setState(() {
+          advanceReports.add(createdReport.sequenceNumber);
+        });
+        widget.onBranchSelected(createdReport.sequenceNumber);
+      }
 
-    // Вызываем коллбэк для передачи информации о выборе
-    widget.onBranchSelected(reportEntry);  // Убедитесь, что только строка передается
-
-    // Лог после обновления списка
-    print('InputDataScreen - Updated advanceReports: $advanceReports');
+      print('Отчет создан: ${createdReport.sequenceNumber}');
+    } catch (e) {
+      print('Error updating advance reports: $e');
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -99,20 +106,6 @@ class _InputDataScreenState extends State<InputDataScreen> {
             if (selectedDepartment != null)
               Text('Филиал: ${selectedDepartment!.name}'),
             const SizedBox(height: 20),
-            // Text(
-            //   'Advance Reports:',
-            //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-            // ),
-            // Expanded(
-            //   child: ListView.builder(
-            //     itemCount: advanceReports.length,
-            //     itemBuilder: (context, index) {
-            //       return ListTile(
-            //         title: Text(advanceReports[index]),
-            //       );
-            //     },
-            //   ),
-            // ),
           ],
         ),
       ),
