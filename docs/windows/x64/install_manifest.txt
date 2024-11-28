@@ -1,0 +1,12 @@
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/icudtl.dat
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/flutter_windows.dll
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.bin
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.bin.json
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.json
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/flutter_assets/FontManifest.json
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/flutter_assets/fonts/MaterialIcons-Regular.otf
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/flutter_assets/kernel_blob.bin
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/flutter_assets/NOTICES
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/flutter_assets/NOTICES.Z
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf
+E:/Projects/JavaProjects/Microservices/advance_report/frontend/build/windows/x64/runner/Debug/data/flutter_assets/shaders/ink_sparkle.frag
