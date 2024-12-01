@@ -1,0 +1,44 @@
+services:
+  eureka-service:
+    build:
+      context: E:/Projects/JavaProjects/Microservices/advance_report/eureka-service
+      dockerfile: Dockerfile
+    ports:
+      - "8761:8761"
+    networks:
+      - app-network
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    restart: always
+
+  department-service:
+    build:
+      context: E:/Projects/JavaProjects/Microservices/advance_report/department-service
+      dockerfile: Dockerfile
+    ports:
+      - "8081:8081"
+    depends_on:
+      - eureka-service
+    networks:
+      - app-network
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-service:8761/eureka/
+    restart: always
+
+  report-service:
+    build:
+      context: E:/Projects/JavaProjects/Microservices/advance_report/report-service
+      dockerfile: Dockerfile
+    ports:
+      - "8082:8082"
+    depends_on:
+      - eureka-service
+    networks:
+      - app-network
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-service:8761/eureka/
+    restart: always
+
+networks:
+  app-network:
+    driver: bridge
