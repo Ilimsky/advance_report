@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+E:\Projects\JavaProjects\Microservices\advance_report\report-service\src\main\resources\application.properties
+E:\Projects\JavaProjects\Microservices\advance_report\report-service\src\main\resources\application-dev.properties
+E:\Projects\JavaProjects\Microservices\advance_report\report-service\src\main\resources\application-stage.properties
+E:\Projects\JavaProjects\Microservices\advance_report\report-service\src\main\resources\application-prod.properties

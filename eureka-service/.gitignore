@@ -3,6 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+!**/src/test/**/target/*.jar
 
 ### STS ###
 .apt_generated
@@ -31,4 +32,4 @@ build/
 
 ### VS Code ###
 .vscode/
-eureka-service/src/main/resources/application.properties
+E:\Projects\JavaProjects\Microservices\advance_report\eureka-service\src\main\resources\application.properties
