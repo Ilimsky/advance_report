@@ -1,20 +1,21 @@
-# Start with a base image containing Java runtime
-FROM openjdk:17-jdk-slim
+# Этап сборки
+FROM maven:3.8.8-eclipse-temurin-17 AS build
 
-# Add Maintainer Info (optional)
-# LABEL maintainer="your-email@example.com"
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Add a volume pointing to /tmp
+# Этап выполнения (финальный образ)
+FROM eclipse-temurin:17-jre
+
+# Добавим volume для временных файлов
 VOLUME /tmp
 
-# Make port 8081 available to the world outside this container
+# Откроем порт 8081
 EXPOSE 8081
 
-# The application's jar file
-ARG JAR_FILE=target/department-service-0.0.1-SNAPSHOT.jar
+# Скопируем только jar-файл из этапа сборки
+COPY --from=build /app/target/department-service-0.0.1.jar /department-service.jar
 
-# Add the application's jar to the container
-COPY ${JAR_FILE} /department-service.jar
-
-# Run the jar file
+# Запуск приложения
 ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/department-service.jar"]
