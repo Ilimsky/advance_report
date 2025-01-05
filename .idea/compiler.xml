@@ -12,12 +12,12 @@
         <module name="department-service" />
         <module name="api-gateway" />
         <module name="report-service" />
-        <module name="demo" />
         <module name="admin-service" />
         <module name="employee-service" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="demo" target="17" />
       <module name="dept-service" target="17" />
       <module name="socket-service" target="17" />
     </bytecodeTargetLevel>
