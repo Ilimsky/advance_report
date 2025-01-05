@@ -4,9 +4,11 @@ import '../department.dart';
 
 class ApiService {
   final String departmentsUrl =
-      'http://localhost:8081/departments'; // Укажите свой URL бэкенда
+      // 'http://localhost:8081/departments'; // Укажите свой URL бэкенда
+      'https://department-adt6.onrender.com/departments'; // Укажите свой URL бэкенда
   final String departmentUrl =
-      'http://localhost:8081/department'; // Укажите свой URL бэкенда
+      // 'http://localhost:8081/department'; // Укажите свой URL бэкенда
+      'https://department-adt6.onrender.com/department'; // Укажите свой URL бэкенда
   final http.Client client; // HTTP клиент для отправки запросов
 
   ApiService({required this.client}); // Инициализация с переданным клиентом
