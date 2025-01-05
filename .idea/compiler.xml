@@ -12,6 +12,7 @@
         <module name="department-service" />
         <module name="api-gateway" />
         <module name="report-service" />
+        <module name="demo" />
         <module name="admin-service" />
         <module name="employee-service" />
       </profile>
@@ -26,6 +27,7 @@
       <module name="admin-service" options="-parameters" />
       <module name="api-gateway" options="-parameters" />
       <module name="config-service" options="-parameters" />
+      <module name="demo" options="-parameters" />
       <module name="department-service" options="-parameters" />
       <module name="dept-service" options="-parameters" />
       <module name="employee-service" options="-parameters" />
