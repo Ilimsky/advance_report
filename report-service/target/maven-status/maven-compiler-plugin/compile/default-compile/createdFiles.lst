@@ -1,0 +1,9 @@
+com\example\reportservice\exception\ReportNotFoundException.class
+com\example\reportservice\service\ReportServiceImpl.class
+com\example\reportservice\entities\Report.class
+com\example\reportservice\dto\ReportDTO.class
+com\example\reportservice\mapper\ReportMapper.class
+com\example\reportservice\controller\ReportController.class
+com\example\reportservice\ReportServiceApplication.class
+com\example\reportservice\repo\ReportRepository.class
+com\example\reportservice\service\ReportService.class
