@@ -75982,7 +75982,7 @@ A.Ez.prototype={
 py(){var s=0,r=A.L(t.d5),q,p=this,o,n
 var $async$py=A.M(function(a,b){if(a===1)return A.I(b,r)
 while(true)switch(s){case 0:s=3
-return A.O(p.c.N_("GET",A.d9("http://localhost:8082/reports"),null),$async$py)
+return A.O(p.c.N_("GET",A.d9("https://report-fzi9.onrender.com/reports"),null),$async$py)
 case 3:n=b
 if(n.b===200){o=J.j_(B.az.c4(B.P.c4(n.w)),new A.TW(),t._Y)
 q=A.a_(o,!0,o.$ti.i("ap.E"))
@@ -75996,7 +75996,7 @@ var $async$x0=A.M(function(b,c){if(b===1){o=c
 s=p}while(true)switch(s){case 0:p=4
 j=t.N
 s=7
-return A.O(n.c.iE("POST",A.d9("http://localhost:8082/report"),A.al(["Content-Type","application/json"],j,j),B.az.hx(a.hH()),null),$async$x0)
+return A.O(n.c.iE("POST",A.d9("https://report-fzi9.onrender.com/report"),A.al(["Content-Type","application/json"],j,j),B.az.hx(a.hH()),null),$async$x0)
 case 7:m=c
 j=m
 A.bl("\u041e\u0442\u0432\u0435\u0442 \u043e\u0442 \u0441\u0435\u0440\u0432\u0435\u0440\u0430: "+A.i1(A.i_(j.e).c.a.h(0,"charset")).c4(j.w))
@@ -76030,7 +76030,7 @@ ajR(a){var s=0,r=A.L(t._Y),q,p=this,o,n
 var $async$z6=A.M(function(b,c){if(b===1)return A.I(c,r)
 while(true)switch(s){case 0:o=t.N
 s=3
-return A.O(p.c.iE("PUT",A.d9("http://localhost:8082/report/"+a.a),A.al(["Content-Type","application/json"],o,o),B.az.hx(a.hH()),null),$async$z6)
+return A.O(p.c.iE("PUT",A.d9("https://report-fzi9.onrender.com/report/"+a.a),A.al(["Content-Type","application/json"],o,o),B.az.hx(a.hH()),null),$async$z6)
 case 3:n=c
 if(n.b===200){q=A.alN(B.az.c4(A.i1(A.i_(n.e).c.a.h(0,"charset")).c4(n.w)))
 s=1
@@ -76039,7 +76039,7 @@ case 1:return A.J(q,r)}})
 return A.K($async$z6,r)},
 pT(){var s=0,r=A.L(t.H),q,p=2,o,n=this,m,l,k,j,i,h,g,f,e,d,c,b,a,a0,a1
 var $async$pT=A.M(function(a2,a3){if(a2===1){o=a3
-s=p}while(true)switch(s){case 0:b=A.d9("http://localhost:8082/reports")
+s=p}while(true)switch(s){case 0:b=A.d9("https://report-fzi9.onrender.com/reports")
 a=t.N
 a0=A.al(["Content-Type","application/json"],a,a)
 A.bl("\u0417\u0430\u043f\u0443\u0441\u043a \u0441\u0438\u043d\u0445\u0440\u043e\u043d\u0438\u0437\u0430\u0446\u0438\u0438. URL: "+A.i(b))
@@ -76086,7 +76086,7 @@ adV(a){var s=0,r=A.L(t.H),q=this,p,o,n
 var $async$xa=A.M(function(b,c){if(b===1)return A.I(c,r)
 while(true)switch(s){case 0:p=""+a
 s=2
-return A.O(q.c.Qi(A.d9("http://localhost:8082/report/"+p)),$async$xa)
+return A.O(q.c.Qi(A.d9("https://report-fzi9.onrender.com/report/"+p)),$async$xa)
 case 2:o=c
 n=o.b
 if(n===200||n===204)A.bl("\u0414\u0435\u043f\u0430\u0440\u0442\u0430\u043c\u0435\u043d\u0442 \u0441 ID "+p+" \u0443\u0441\u043f\u0435\u0448\u043d\u043e \u0443\u0434\u0430\u043b\u0435\u043d")

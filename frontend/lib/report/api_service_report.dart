@@ -3,8 +3,10 @@ import 'package:frontend/report/report.dart';
 import 'package:http/http.dart' as http;
 
 class ApiServiceReport {
-  final String reportsUrl = 'http://localhost:8082/reports';  // Укажите свой URL бэкенда
-  final String reportUrl = 'http://localhost:8082/report';  // Укажите свой URL бэкенда
+  // final String reportsUrl = 'http://localhost:8082/reports';  // Укажите свой URL бэкенда
+  final String reportsUrl = 'https://report-fzi9.onrender.com/reports';  // Укажите свой URL бэкенда
+  // final String reportUrl = 'http://localhost:8082/report';  // Укажите свой URL бэкенда
+  final String reportUrl = 'https://report-fzi9.onrender.com/report';  // Укажите свой URL бэкенда
   final http.Client client; // HTTP клиент для отправки запросов
 
   ApiServiceReport({required this.client}); // Инициализация с переданным клиентом
