@@ -1,20 +1,14 @@
-# Start with a base image containing Java runtime
+# Используйте базовый образ с Java Runtime
 FROM openjdk:17-jdk-slim
 
-# Add Maintainer Info (optional)
-# LABEL maintainer="your-email@example.com"
+# Создайте директорию для приложения
+WORKDIR /app
 
-# Add a volume pointing to /tmp
-VOLUME /tmp
+# Скопируйте JAR-файл приложения в контейнер
+COPY target/report-service-0.0.1-SNAPSHOT.jar /app/report-service.jar
 
-# Make port 8081 available to the world outside this container
+# Откройте порт 8761, на котором будет работать Eureka Server
 EXPOSE 8082
 
-# The application's jar file
-ARG JAR_FILE=target/report-service-0.0.1-SNAPSHOT.jar
-
-# Add the application's jar to the container
-COPY ${JAR_FILE} /report-service.jar
-
-# Run the jar file
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/report-service.jar"]
+# Запустите JAR-файл приложения
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "/app/report-service.jar"]
