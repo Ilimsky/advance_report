@@ -5,7 +5,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Скопируйте JAR-файл приложения в контейнер
-COPY target/report-service-0.0.1-SNAPSHOT.jar /app/report-service.jar
+COPY target/report-service-0.0.1.jar /app/report-service.jar
 
 # Откройте порт 8761, на котором будет работать Eureka Server
 EXPOSE 8082
