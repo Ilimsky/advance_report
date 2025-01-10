@@ -18,6 +18,8 @@
         <option value="$PROJECT_DIR$/socket-service/pom.xml" />
         <option value="$PROJECT_DIR$/report-service/pom.xml" />
         <option value="$PROJECT_DIR$/demo/pom.xml" />
+        <option value="$PROJECT_DIR$/position-service/pom.xml" />
+        <option value="$PROJECT_DIR$/job-service/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
