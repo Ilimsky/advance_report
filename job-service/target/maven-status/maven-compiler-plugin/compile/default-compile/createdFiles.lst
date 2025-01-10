@@ -1,0 +1,9 @@
+com\example\jobservice\entities\Job.class
+com\example\jobservice\exception\JobNotFoundException.class
+com\example\jobservice\repo\JobRepository.class
+com\example\jobservice\mapper\JobMapper.class
+com\example\jobservice\dto\JobDTO.class
+com\example\jobservice\service\JobServiceImpl.class
+com\example\jobservice\service\JobService.class
+com\example\jobservice\controller\JobController.class
+com\example\jobservice\JobServiceApplication.class
