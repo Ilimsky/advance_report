@@ -20,6 +20,7 @@
         <option value="$PROJECT_DIR$/demo/pom.xml" />
         <option value="$PROJECT_DIR$/position-service/pom.xml" />
         <option value="$PROJECT_DIR$/job-service/pom.xml" />
+        <option value="$PROJECT_DIR$/monolith/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -31,7 +32,7 @@
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_21" default="true" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="corretto-17" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="ProjectType">

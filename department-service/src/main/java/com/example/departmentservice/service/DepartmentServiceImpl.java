@@ -2,6 +2,7 @@ package com.example.departmentservice.service;
 
 import com.example.departmentservice.dto.DepartmentDTO;
 import com.example.departmentservice.entity.Department;
+import com.example.departmentservice.exception.DepartmentNotFoundException;
 import com.example.departmentservice.mappers.DepartmentMapper;
 import com.example.departmentservice.repo.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service // Аннотация указывает, что этот класс — компонент уровня сервиса (Spring автоматически управляет этим бином).
+@Service
 public class DepartmentServiceImpl implements DepartmentService {
 
     private final DepartmentRepository departmentRepository;
@@ -25,18 +26,18 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDTO createDepartment(DepartmentDTO departmentDTO) {
-        Department department = departmentMapper.toEntity(departmentDTO);
-        Department savedDepartment = departmentRepository.save(department);
-        return departmentMapper.toDTO(savedDepartment);
-    }
-
-    @Override
     public List<DepartmentDTO> getAllDepartments() {
         return departmentRepository.findAll()
                 .stream()
                 .map(departmentMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public DepartmentDTO createDepartment(DepartmentDTO departmentDTO) {
+        Department department = departmentMapper.toEntity(departmentDTO);
+        Department savedDepartment = departmentRepository.save(department);
+        return departmentMapper.toDTO(savedDepartment);
     }
 
     @Override
@@ -46,16 +47,18 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public DepartmentDTO updateDepartment(Long id, DepartmentDTO departmentDTO) {
-        Department department = departmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Department not found"));
-        department.setName(departmentDTO.getName());
-        Department updatedDepartment = departmentRepository.save(department);
-        return departmentMapper.toDTO(updatedDepartment);
+    public void deleteDepartment(Long id) {
+        departmentRepository.deleteById(id);
     }
 
     @Override
-    public void delete(Long id) {
-        departmentRepository.deleteById(id);
+    public DepartmentDTO updateDepartment(Long id, DepartmentDTO departmentDTO) {
+        Department department = departmentRepository.findById(id)
+                .orElseThrow(() -> new DepartmentNotFoundException("Department not found"));
+
+        department.setName(departmentDTO.getName());
+
+        Department updatedDepartment = departmentRepository.save(department);
+        return departmentMapper.toDTO(updatedDepartment);
     }
 }

@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+import '../api_service.dart';
+import '../models/department.dart';
+
+class DepartmentProvider extends ChangeNotifier {
+  List<Department> _departments = [];
+  bool _isLoading = false;
+
+  List<Department> get departments => _departments;
+  bool get isLoading => _isLoading;
+
+  DepartmentProvider() {
+    fetchDepartments();
+  }
+
+  void fetchDepartments() async {
+    _isLoading = true;
+    notifyListeners();
+
+    _departments = await ApiService().fetchDepartments();
+    _isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> createDepartment(String name) async {
+    final newDepartment = await ApiService().createDepartment(name);
+    _departments.add(newDepartment);
+    notifyListeners();
+  }
+
+  Future<void> updateDepartment(int id, String name) async {
+    final updatedDepartment = await ApiService().updateDepartment(id, name);
+    int index = _departments.indexWhere((dept) => dept.id == id);
+    if (index != -1) {
+      _departments[index] = updatedDepartment;
+      notifyListeners();
+    }
+  }
+
+  Future<void> deleteDepartment(int id) async {
+    await ApiService().deleteDepartment(id);
+    _departments.removeWhere((dept) => dept.id == id);
+    notifyListeners();
+  }
+}

@@ -10,6 +10,7 @@
         <module name="eureka-service" />
         <module name="job-service" />
         <module name="config-service" />
+        <module name="monolith" />
         <module name="department-service" />
         <module name="api-gateway" />
         <module name="report-service" />
@@ -25,15 +26,16 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="admin-service" options="-parameters" />
+      <module name="admin-service" options="" />
       <module name="api-gateway" options="-parameters" />
-      <module name="config-service" options="-parameters" />
+      <module name="config-service" options="" />
       <module name="demo" options="-parameters" />
       <module name="department-service" options="-parameters" />
       <module name="dept-service" options="-parameters" />
-      <module name="employee-service" options="-parameters" />
+      <module name="employee-service" options="" />
       <module name="eureka-service" options="-parameters" />
-      <module name="job-service" options="-parameters" />
+      <module name="job-service" options="" />
+      <module name="monolith" options="-parameters" />
       <module name="report-service" options="-parameters" />
       <module name="socket-service" options="-parameters" />
     </option>

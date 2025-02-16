@@ -1,134 +1,54 @@
 package com.example.reportservice.controller;
 
-import com.example.reportservice.dto.ReportDTO;
-import com.example.reportservice.exception.ReportNotFoundException;
-import com.example.reportservice.service.ReportServiceImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.example.reportservice.entities.Report;
+import com.example.reportservice.service.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 @RestController
+@RequestMapping("/api/reports")
 @CrossOrigin(origins = "*")
 public class ReportController {
-    private final ReportServiceImpl reportServiceImpl;
-    private final Map<String, Integer> branchCounters = new HashMap<>();
-    private static final Logger logger = LoggerFactory.getLogger(ReportController.class);
-
 
     @Autowired
-    public ReportController(ReportServiceImpl reportServiceImpl){
-        this.reportServiceImpl = reportServiceImpl;
+    private ReportService reportService;
+
+    @PostMapping("/{departmentId}")
+    public Report createReport(@PathVariable Long departmentId) {
+        return reportService.createReport(departmentId);
     }
 
-    @GetMapping("/counter/{branchName}")
-    public ResponseEntity<Integer> getCounter(@PathVariable String branchName) {
-        int counter = branchCounters.getOrDefault(branchName, 0);
-        return ResponseEntity.ok(counter);
+    @GetMapping
+    public List<Report> getAllReports() {
+        System.out.println("GET /api/reports called");
+        return reportService.getAllReports();
     }
 
-    @PostMapping("/report")
-    public ResponseEntity<ReportDTO> createReport(@RequestBody ReportDTO reportDTO) {
-        // Логируем полученный sequenceNumber
-        logger.debug("Sequence Number: {}", reportDTO.getSequenceNumber());
+    @GetMapping("/department/{departmentId}")
+//    public List<Report> getReportsByDepartmentId(@PathVariable Long departmentId) {
+//        return reportService.getReportsByDepartmentId(departmentId);
+//    }
 
-        // Разделяем sequenceNumber по "/"
-        String[] parts = reportDTO.getSequenceNumber().split("/");
+//    @GetMapping("/{reportId}")
+//    public Report getReportById(@PathVariable Long reportId) {
+//        return reportService.getReportById(reportId);
+//    }
 
-        // Проверка на корректность формата
-        if (parts.length == 2) {
-            try {
-                // Присваиваем branchCounter значение из первого компонента строки
-                int branchCounter = Integer.parseInt(parts[0]);
-                reportDTO.setBranchCounter(branchCounter);
+//    @PutMapping("/{reportId}")
+//    public Report updateReport(@PathVariable Long reportId, @RequestBody Report updatedReport) {
+//        return reportService.updateReport(reportId, updatedReport);
+//    }
 
-                // Извлекаем название филиала для обработки (если нужно)
-                String branchName = parts[1];
-
-                // Увеличиваем счётчик для филиала (если это необходимо)
-                int updatedCounter = branchCounters.getOrDefault(branchName, 0) + 1;
-                branchCounters.put(branchName, updatedCounter);
-
-                // Перезаписываем sequenceNumber на основе нового счётчика
-                reportDTO.setSequenceNumber(updatedCounter + "/" + branchName);
-
-                // Сохраняем отчёт
-                ReportDTO createdReportDTO = reportServiceImpl.createReport(reportDTO);
-
-                return ResponseEntity.ok(createdReportDTO);
-            } catch (NumberFormatException e) {
-                // Логируем ошибку, если первый компонент не число
-                logger.warn("Invalid sequence number format, first part is not a number: {}", reportDTO.getSequenceNumber());
-                return ResponseEntity.badRequest().body(null);
-            }
-        } else {
-            // Логируем предупреждение, если формат некорректен
-            logger.warn("Invalid sequence number format: {}", reportDTO.getSequenceNumber());
-
-            // Возвращаем ошибку клиенту
-            return ResponseEntity.badRequest().body(null);
-        }
+    @DeleteMapping("/{reportId}")
+    public void deleteReport(@PathVariable Long reportId) {
+        reportService.deleteReport(reportId);
     }
 
-    @PostMapping("/reports")
-    public ResponseEntity<List<ReportDTO>> createReports(@RequestBody List<ReportDTO> reportDTOs){
-        List<ReportDTO> createReportDTOs = reportDTOs.stream()
-        .map(reportServiceImpl::createReport)
-        .collect(Collectors.toList());
-        return ResponseEntity.ok(createReportDTOs);
-    }
-
-    @GetMapping("/reports")
-    public ResponseEntity<List<ReportDTO>> getAllReports(){
-        List<ReportDTO> reportDTOs = reportServiceImpl.getAllReports();
-        return ResponseEntity.ok(reportDTOs);
-    }
-
-    @GetMapping("/report/{id}")
-    public ResponseEntity<ReportDTO> getReportById(@PathVariable Long id){
-        Optional<ReportDTO> reportDTO = reportServiceImpl.getReportById(id);
-        if(reportDTO.isPresent()){
-            return ResponseEntity.ok(reportDTO.get());
-        }else{
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-    @PutMapping("/report/{id}")
-    public ResponseEntity<ReportDTO> updateReport(@PathVariable Long id, @RequestBody ReportDTO reportDTO){
-        try{
-            // Сначала получаем существующий отчет
-            ReportDTO existingReport = reportServiceImpl.getReportById(id).orElseThrow(() -> new RuntimeException("Report not found"));
-
-            // Обновляем только необходимые поля
-            existingReport.setSequenceNumber(reportDTO.getSequenceNumber());
-            existingReport.setBranchCounter(reportDTO.getBranchCounter()); // Обновление поля branchCounter
-
-            // Сохраняем обновленный отчет
-            ReportDTO updatedReportDTO = reportServiceImpl.updateReport(id, existingReport);
-            return ResponseEntity.ok(updatedReportDTO);
-        } catch(ReportNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
-
-
-    @DeleteMapping("/report/{id}")
-    public ResponseEntity<ReportDTO> deleteReportById(@PathVariable Long id){
-        try{
-            reportServiceImpl.delete(id);
-            return ResponseEntity.noContent().build();
-        }catch(ReportNotFoundException e){
-            return ResponseEntity.notFound().build();
-        }
-    }
+//    @DeleteMapping("/department/{departmentId}")
+//    public void deleteReportsByDepartmentId(@PathVariable Long departmentId) {
+//        reportService.deleteReportsByDepartmentId(departmentId);
+//    }
 }
