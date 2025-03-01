@@ -32,37 +32,6 @@ public class ReportServiceImpl implements ReportService {
         this.reportMapper = reportMapper;
     }
 
-//    @Override
-//    public ReportDTO createReport(Long departmentId, Long jobId, Long employeeId, Long accountId) {
-//        Department department = departmentRepository.findById(departmentId)
-//                .orElseThrow(() -> new RuntimeException("Department not found"));
-//        Job job = jobRepository.findById(jobId)
-//                .orElseThrow(() -> new RuntimeException("Job not found"));
-//
-//        Employee employee = employeeRepository.findById(employeeId)
-//                .orElseThrow(() -> new RuntimeException("Employee not found"));
-//
-//        Account account = accountRepository.findById(accountId)
-//                .orElseThrow(() -> new RuntimeException("Account not found"));
-//
-//        List<Report> reports = reportRepository.findByDepartmentById(departmentId);
-//        int nextReportNumber = reports.size() + 1;
-//
-//        Report report = new Report();
-//        report.setDepartment(department);
-//        report.setJob(job);
-//        report.setEmployee(employee);
-//        report.setAccount(account);
-//        report.setReportNumber(nextReportNumber);
-//        report.setDepartmentIdentifier(department.getId());
-//        report.setJobIdentifier(job.getId());
-//        report.setEmployeeIdentifier(employee.getId());
-//        report.setAccountIdentifier(account.getId());
-//
-//        Report savedReport = reportRepository.save(report);
-//        return reportMapper.toDTO(savedReport);
-//    }
-
     @Override
     public ReportDTO createReport(ReportDTO reportDTO) {
         Department department = departmentRepository.findById(reportDTO.getDepartmentId())

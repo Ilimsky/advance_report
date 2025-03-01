@@ -26,14 +26,6 @@ public class ReportController {
         return ResponseEntity.ok(reports);
     }
 
-//    @PostMapping("/{departmentId}/{jobId}/{employeeId}/{accountId}")
-//    public ResponseEntity<ReportDTO> createReport(@PathVariable Long departmentId,
-//                                                  @PathVariable Long jobId,
-//                                                  @PathVariable Long employeeId,
-//                                                  @PathVariable Long accountId) {
-//        ReportDTO createReport = reportServiceImpl.createReport(departmentId, jobId, employeeId, accountId);
-//        return new ResponseEntity<>(createReport, HttpStatus.CREATED);
-//    }
 
     @PostMapping
     public ResponseEntity<ReportDTO> createReport(@RequestBody ReportDTO reportDTO) {

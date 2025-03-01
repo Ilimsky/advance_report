@@ -3,7 +3,6 @@ package com.example.monolith.report;
 import java.util.List;
 
 public interface ReportService {
-//    ReportDTO createReport(Long departmentId, Long jobId, Long employeeId, Long accountId);
     ReportDTO createReport(ReportDTO reportDTO);
 
     List<ReportDTO> getAllReports();
