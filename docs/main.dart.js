@@ -82864,7 +82864,7 @@ var $async$lh=B.K(function(a,b){if(a===1)return B.G(b,r)
 while(true)switch(s){case 0:q.b=!0
 q.a4()
 s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).lh(),$async$lh)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).lh(),$async$lh)
 case 2:q.a=b
 q.b=!1
 q.a4()
@@ -82874,7 +82874,7 @@ l4(a){return this.ai6(a)},
 ai6(a){var s=0,r=B.J(t.H),q=this,p
 var $async$l4=B.K(function(b,c){if(b===1)return B.G(c,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).l4(a),$async$l4)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).l4(a),$async$l4)
 case 2:p=c
 J.f1(q.a,p)
 q.a4()
@@ -82884,7 +82884,7 @@ lO(a,b){return this.apw(a,b)},
 apw(a,b){var s=0,r=B.J(t.H),q=this,p,o
 var $async$lO=B.K(function(c,d){if(c===1)return B.G(d,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).lO(a,b),$async$lO)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).lO(a,b),$async$lO)
 case 2:p=d
 o=J.H8(q.a,new B.Yj(a))
 if(o!==-1){J.ja(q.a,o,p)
@@ -82894,7 +82894,7 @@ la(a){return this.aiI(a)},
 aiI(a){var s=0,r=B.J(t.H),q=this
 var $async$la=B.K(function(b,c){if(b===1)return B.G(c,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).la(a),$async$la)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).la(a),$async$la)
 case 2:J.wp(q.a,new B.Yi(a))
 q.a4()
 return B.H(null,r)}})
@@ -83604,7 +83604,7 @@ var $async$lj=B.K(function(a,b){if(a===1)return B.G(b,r)
 while(true)switch(s){case 0:q.b=!0
 q.a4()
 s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).lj(),$async$lj)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).lj(),$async$lj)
 case 2:q.a=b
 q.b=!1
 q.a4()
@@ -83614,7 +83614,7 @@ l5(a){return this.aid(a)},
 aid(a){var s=0,r=B.J(t.H),q=this,p
 var $async$l5=B.K(function(b,c){if(b===1)return B.G(c,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).l5(a),$async$l5)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).l5(a),$async$l5)
 case 2:p=c
 J.f1(q.a,p)
 q.a4()
@@ -83624,7 +83624,7 @@ lP(a,b){return this.apB(a,b)},
 apB(a,b){var s=0,r=B.J(t.H),q=this,p,o
 var $async$lP=B.K(function(c,d){if(c===1)return B.G(d,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).lP(a,b),$async$lP)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).lP(a,b),$async$lP)
 case 2:p=d
 o=J.H8(q.a,new B.a0o(a))
 if(o!==-1){J.ja(q.a,o,p)
@@ -83634,7 +83634,7 @@ lb(a){return this.aiL(a)},
 aiL(a){var s=0,r=B.J(t.H),q=this
 var $async$lb=B.K(function(b,c){if(b===1)return B.G(c,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).lb(a),$async$lb)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).lb(a),$async$lb)
 case 2:J.wp(q.a,new B.a0n(a))
 q.a4()
 return B.H(null,r)}})
@@ -83652,7 +83652,7 @@ var $async$lk=B.K(function(a,b){if(a===1)return B.G(b,r)
 while(true)switch(s){case 0:q.b=!0
 q.a4()
 s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).lk(),$async$lk)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).lk(),$async$lk)
 case 2:q.a=b
 q.b=!1
 q.a4()
@@ -83662,7 +83662,7 @@ l6(a){return this.aif(a)},
 aif(a){var s=0,r=B.J(t.H),q=this,p
 var $async$l6=B.K(function(b,c){if(b===1)return B.G(c,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).l6(a),$async$l6)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).l6(a),$async$l6)
 case 2:p=c
 J.f1(q.a,p)
 q.a4()
@@ -83672,7 +83672,7 @@ lQ(a,b){return this.apE(a,b)},
 apE(a,b){var s=0,r=B.J(t.H),q=this,p,o
 var $async$lQ=B.K(function(c,d){if(c===1)return B.G(d,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).lQ(a,b),$async$lQ)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).lQ(a,b),$async$lQ)
 case 2:p=d
 o=J.H8(q.a,new B.a2A(a))
 if(o!==-1){J.ja(q.a,o,p)
@@ -83682,7 +83682,7 @@ lc(a){return this.aiN(a)},
 aiN(a){var s=0,r=B.J(t.H),q=this
 var $async$lc=B.K(function(b,c){if(b===1)return B.G(c,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).lc(a),$async$lc)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).lc(a),$async$lc)
 case 2:J.wp(q.a,new B.a2z(a))
 q.a4()
 return B.H(null,r)}})
@@ -83700,7 +83700,7 @@ var $async$ll=B.K(function(a,b){if(a===1)return B.G(b,r)
 while(true)switch(s){case 0:q.b=!0
 q.a4()
 s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).ll(),$async$ll)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).ll(),$async$ll)
 case 2:q.a=b
 q.b=!1
 q.a4()
@@ -83710,7 +83710,7 @@ l7(a){return this.aih(a)},
 aih(a){var s=0,r=B.J(t.H),q=this,p
 var $async$l7=B.K(function(b,c){if(b===1)return B.G(c,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).l7(a),$async$l7)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).l7(a),$async$l7)
 case 2:p=c
 J.f1(q.a,p)
 q.a4()
@@ -83720,7 +83720,7 @@ lS(a,b){return this.apH(a,b)},
 apH(a,b){var s=0,r=B.J(t.H),q=this,p,o
 var $async$lS=B.K(function(c,d){if(c===1)return B.G(d,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).lS(a,b),$async$lS)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).lS(a,b),$async$lS)
 case 2:p=d
 o=J.H8(q.a,new B.a5T(a))
 if(o!==-1){J.ja(q.a,o,p)
@@ -83730,7 +83730,7 @@ ld(a){return this.aiP(a)},
 aiP(a){var s=0,r=B.J(t.H),q=this
 var $async$ld=B.K(function(b,c){if(b===1)return B.G(c,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).ld(a),$async$ld)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).ld(a),$async$ld)
 case 2:J.wp(q.a,new B.a5S(a))
 q.a4()
 return B.H(null,r)}})
@@ -83943,7 +83943,7 @@ var $async$li=B.K(function(a,b){if(a===1)return B.G(b,r)
 while(true)switch(s){case 0:q.b=!0
 q.a4()
 s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).li(),$async$li)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).li(),$async$li)
 case 2:q.a=b
 q.b=!1
 q.a4()
@@ -83953,7 +83953,7 @@ l8(a,b,c,d,e,f,g,h,i,j){return this.aip(a,b,c,d,e,f,g,h,i,j)},
 aip(a,b,c,d,e,f,g,h,i,j){var s=0,r=B.J(t.H),q=this,p
 var $async$l8=B.K(function(k,l){if(k===1)return B.G(l,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).l8(a,b,c,d,e,f,g,h,i,j),$async$l8)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).l8(a,b,c,d,e,f,g,h,i,j),$async$l8)
 case 2:p=l
 J.f1(q.a,p)
 q.a4()
@@ -83963,7 +83963,7 @@ lT(a,b,c){return this.apJ(a,b,c)},
 apJ(a,b,c){var s=0,r=B.J(t.H),q=this,p,o
 var $async$lT=B.K(function(d,e){if(d===1)return B.G(e,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).lT(a,b,c),$async$lT)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).lT(a,b,c),$async$lT)
 case 2:p=e
 o=J.H8(q.a,new B.adf(a))
 if(o!==-1){J.ja(q.a,o,p)
@@ -83973,7 +83973,7 @@ le(a){return this.aiR(a)},
 aiR(a){var s=0,r=B.J(t.H),q=this
 var $async$le=B.K(function(b,c){if(b===1)return B.G(c,r)
 while(true)switch(s){case 0:s=2
-return B.M(new B.df(B.dV(B.dS("http://localhost:8070/api"))).le(a),$async$le)
+return B.M(new B.df(B.dV(B.dS("https://advance-report.onrender.com/api"))).le(a),$async$le)
 case 2:J.wp(q.a,new B.ade(a))
 q.a4()
 return B.H(null,r)}})
