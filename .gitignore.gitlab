@@ -1,0 +1,15 @@
+# IntelliJ / IDEA
+.idea/
+*.iml
+
+# Java
+target/
+*.log
+
+# macOS
+.DS_Store
+
+# ОС и временные файлы
+Thumbs.db
+*.swp
+*.tmp
