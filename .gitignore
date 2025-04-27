@@ -1,15 +1,10 @@
-# IntelliJ / IDEA
-.idea/
-*.iml
-
-# Java
-target/
-*.log
-
-# macOS
-.DS_Store
-
-# ОС и временные файлы
-Thumbs.db
-*.swp
-*.tmp
+*
+!docs/
+!docs/**
+!backend/
+!backend/Dockerfile
+!backend/target/backend-0.0.1-SNAPSHOT.jar
+!revizor_backend/
+!revizor_backend/Dockerfile
+!revizor_backend/target/revizor-0.0.1-SNAPSHOT.jar
+!TP.md
