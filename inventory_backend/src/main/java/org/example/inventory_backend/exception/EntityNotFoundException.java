@@ -1,4 +1,4 @@
-package org.example.revizor.exception;
+package org.example.inventory_backend.exception;
 
 public class EntityNotFoundException extends RuntimeException {
 

@@ -2,6 +2,7 @@ package org.example.inventory_backend.mapper;
 
 import org.example.inventory_backend.dto.EmployeeDTO;
 import org.example.inventory_backend.model.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class DepartmentDTO {
-
+public class BindingDTO {
     private Long id;
-    private String name;
+    private EmployeeDTO employee;
+    private DepartmentDTO department;
+    private JobDTO job;
 }
