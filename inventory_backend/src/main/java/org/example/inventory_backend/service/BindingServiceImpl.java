@@ -6,10 +6,8 @@ import org.example.inventory_backend.mapper.BindingMapper;
 import org.example.inventory_backend.model.Binding;
 import org.example.inventory_backend.model.Department;
 import org.example.inventory_backend.model.Employee;
-import org.example.inventory_backend.model.Job;
 import org.example.inventory_backend.repository.BindingRepository;
 import org.example.inventory_backend.repository.DepartmentRepository;
-import org.example.inventory_backend.repository.JobRepository;
 import org.example.inventory_backend.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -21,18 +19,16 @@ public class BindingServiceImpl implements BindingService {
 
     private final BindingRepository bindingRepository;
     private final DepartmentRepository departmentRepository;
-    private final JobRepository jobRepository;
     private final EmployeeRepository employeeRepository;
     private final BindingMapper bindingMapper;
 
     public BindingServiceImpl(BindingRepository bindingRepository,
                               DepartmentRepository departmentRepository,
-                              JobRepository jobRepository,
+
                               EmployeeRepository employeeRepository,
                               BindingMapper bindingMapper) {
         this.bindingRepository = bindingRepository;
         this.departmentRepository = departmentRepository;
-        this.jobRepository = jobRepository;
         this.employeeRepository = employeeRepository;
         this.bindingMapper = bindingMapper;
     }
@@ -42,13 +38,11 @@ public class BindingServiceImpl implements BindingService {
         // Проверка существования связанных сущностей
         Department department = departmentRepository.findById(bindingDTO.getDepartment().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Department", bindingDTO.getDepartment().getId()));
-        Job job = jobRepository.findById(bindingDTO.getJob().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Job", bindingDTO.getJob().getId()));
         Employee employee = employeeRepository.findById(bindingDTO.getEmployee().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Employee", bindingDTO.getEmployee().getId()));
 
         // Создание привязки
-        Binding binding = bindingMapper.toEntity(bindingDTO, department, job, employee);
+        Binding binding = bindingMapper.toEntity(bindingDTO, department, employee);
 
         // Сохранение в базе данных
         Binding savedBinding = bindingRepository.save(binding);
@@ -65,20 +59,17 @@ public class BindingServiceImpl implements BindingService {
     }
 
     @Override
-    public List<BindingDTO> getBindingsByIds(Long departmentId, Long jobId, Long employeeId) {
+    public List<BindingDTO> getBindingsByIds(Long departmentId,  Long employeeId) {
         // Проверка существования связанных сущностей
         if (!departmentRepository.existsById(departmentId)) {
             throw new EntityNotFoundException("Department", departmentId);
-        }
-        if (!jobRepository.existsById(jobId)) {
-            throw new EntityNotFoundException("Job", jobId);
         }
         if (!employeeRepository.existsById(employeeId)) {
             throw new EntityNotFoundException("Employee", employeeId);
         }
         // Поиск и возврат всех привязок
         List<Binding> bindings = bindingRepository
-                .findByDepartmentIdAndJobIdAndEmployeeId(departmentId, jobId, employeeId);
+                .findByDepartmentIdAndEmployeeId(departmentId, employeeId);
 
         return bindings.stream()
                 .map(bindingMapper::toDTO)
@@ -102,14 +93,14 @@ public class BindingServiceImpl implements BindingService {
         // Проверка и обновление привязок
         Department department = departmentRepository.findById(updatedBindingDTO.getDepartment().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Department", updatedBindingDTO.getDepartment().getId()));
-        Job job = jobRepository.findById(updatedBindingDTO.getJob().getId())
-                .orElseThrow(() -> new EntityNotFoundException("Job", updatedBindingDTO.getJob().getId()));
+//        Job job = jobRepository.findById(updatedBindingDTO.getJob().getId())
+//                .orElseThrow(() -> new EntityNotFoundException("Job", updatedBindingDTO.getJob().getId()));
         Employee employee = employeeRepository.findById(updatedBindingDTO.getEmployee().getId())
                 .orElseThrow(() -> new EntityNotFoundException("Employee", updatedBindingDTO.getEmployee().getId()));
 
         // Обновление привязки
         existingBinding.setDepartment(department);
-        existingBinding.setJob(job);
+//        existingBinding.setJob(job);
         existingBinding.setEmployee(employee);
 
         // Сохранение обновлённой привязки
@@ -128,20 +119,17 @@ public class BindingServiceImpl implements BindingService {
     }
 
     @Override
-    public void deleteBindingsByIds(Long departmentId, Long jobId, Long employeeId) {
+    public void deleteBindingsByIds(Long departmentId, Long employeeId) {
         // Проверка существования сущностей для удаления
         if (!departmentRepository.existsById(departmentId)) {
             throw new EntityNotFoundException("Department", departmentId);
-        }
-        if (!jobRepository.existsById(jobId)) {
-            throw new EntityNotFoundException("Job", jobId);
         }
         if (!employeeRepository.existsById(employeeId)) {
             throw new EntityNotFoundException("Employee", employeeId);
         }
         // Удаление привязок
         List<Binding> bindings = bindingRepository
-                .findByDepartmentIdAndJobIdAndEmployeeId(departmentId, jobId, employeeId);
+                .findByDepartmentIdAndEmployeeId(departmentId, employeeId);
 
         bindingRepository.deleteAll(bindings);
     }

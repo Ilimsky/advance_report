@@ -10,11 +10,9 @@ public class SkedMapper {
         SkedDTO dto = new SkedDTO();
         dto.setId(sked.getId());
         dto.setDepartmentId(sked.getDepartment().getId());
-        dto.setJobId(sked.getJob().getId());
         dto.setEmployeeId(sked.getEmployee().getId());
         dto.setSkedNumber(sked.getSkedNumber());
         dto.setDepartmentIdentifier(sked.getDepartmentIdentifier());
-        dto.setJobIdentifier(sked.getJobIdentifier());
         dto.setEmployeeIdentifier(sked.getEmployeeIdentifier());
 
         dto.setDateReceived(sked.getDateReceived());
@@ -28,14 +26,12 @@ public class SkedMapper {
         return dto;
     }
 
-    public Sked toEntity(SkedDTO dto, Department department, Job job, Employee employee) {
+    public Sked toEntity(SkedDTO dto, Department department, Employee employee) {
         Sked sked = new Sked();
         sked.setDepartment(department);
-        sked.setJob(job);
         sked.setEmployee(employee);
         sked.setSkedNumber(dto.getSkedNumber());
         sked.setDepartmentIdentifier(dto.getDepartmentIdentifier());
-        sked.setJobIdentifier(dto.getJobIdentifier());
         sked.setEmployeeIdentifier(dto.getEmployeeIdentifier());
 
         // Новые поля

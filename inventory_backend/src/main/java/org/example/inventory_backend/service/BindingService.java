@@ -13,7 +13,7 @@ public interface BindingService {
     List<BindingDTO> getAllBindings();
 
     // Получение привязок сотрудников по ID филиала, должности, сотрудника и счёта
-    List<BindingDTO> getBindingsByIds(Long departmentId, Long jobId, Long employeeId);
+    List<BindingDTO> getBindingsByIds(Long departmentId, Long employeeId);
 
     // Получение привязки по ID
     BindingDTO getBindingById(Long bindingId);
@@ -25,5 +25,5 @@ public interface BindingService {
     void deleteBinding(Long bindingId);
 
     // Удаление привязок по фильтрам (филиал, должность, сотрудник и счёт)
-    void deleteBindingsByIds(Long departmentId, Long jobId, Long employeeId);
+    void deleteBindingsByIds(Long departmentId, Long employeeId);
 }

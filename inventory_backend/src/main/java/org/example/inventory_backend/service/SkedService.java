@@ -1,6 +1,5 @@
 package org.example.inventory_backend.service;
 
-
 import org.example.inventory_backend.dto.SkedDTO;
 
 import java.util.List;
@@ -10,7 +9,7 @@ public interface SkedService {
 
     List<SkedDTO> getAllSkeds();
 
-    List<SkedDTO> getSkedsByIds(Long departmentId, Long jobId, Long employeeId);
+    List<SkedDTO> getSkedsByIds(Long departmentId, Long employeeId);
 
     List<SkedDTO> getSkedsByDepartmentId(Long departmentId);
 
@@ -20,5 +19,5 @@ public interface SkedService {
 
     void deleteSked(Long skedId);
 
-    void deleteSkedsByIds(Long departmentId, Long jobId, Long employeeId);
+    void deleteSkedsByIds(Long departmentId, Long employeeId);
 }

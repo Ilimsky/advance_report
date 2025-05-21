@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface BindingRepository extends JpaRepository<Binding, Long> {
-    List<Binding> findByDepartmentIdAndJobIdAndEmployeeId(Long departmentId, Long jobId, Long employeeId);
+    List<Binding> findByDepartmentIdAndEmployeeId(Long departmentId, Long employeeId);
 }

@@ -16,7 +16,6 @@ import java.util.Optional;
 public class SkedController {
 
     private final SkedServiceImpl skedServiceImpl;
-
     @Autowired
     public SkedController(SkedServiceImpl skedServiceImpl) {
         this.skedServiceImpl = skedServiceImpl;
@@ -37,9 +36,9 @@ public class SkedController {
 
     @GetMapping("/department/{departmentId}/job/{jobId}/employee/{employeeId}")
     public ResponseEntity<List<SkedDTO>> getSkedsByIds(@PathVariable Long departmentId,
-                                                         @PathVariable Long jobId,
+
                                                          @PathVariable Long employeeId) {
-        List<SkedDTO> skedsByIds = skedServiceImpl.getSkedsByIds(departmentId, jobId, employeeId);
+        List<SkedDTO> skedsByIds = skedServiceImpl.getSkedsByIds(departmentId, employeeId);
         return ResponseEntity.ok(skedsByIds);
     }
 
@@ -69,9 +68,8 @@ public class SkedController {
 
     @DeleteMapping("/department/{departmentId}/job/{jobId}/employee/{employeeId}")
     public ResponseEntity<Void> deleteSkedsByIds(@PathVariable Long departmentId,
-                                                   @PathVariable Long jobId,
                                                    @PathVariable Long employeeId) {
-        skedServiceImpl.deleteSkedsByIds(departmentId, jobId, employeeId);
+        skedServiceImpl.deleteSkedsByIds(departmentId, employeeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

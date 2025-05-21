@@ -39,12 +39,11 @@ public class BindingController {
     }
 
     // Получение привязок сотрудников по ID департамента, должности и сотрудника
-    @GetMapping("/department/{departmentId}/job/{jobId}/employee/{employeeId}")
+    @GetMapping("/department/{departmentId}/employee/{employeeId}")
     public ResponseEntity<List<BindingDTO>> getBindingsByIds(
             @PathVariable Long departmentId,
-            @PathVariable Long jobId,
             @PathVariable Long employeeId) {
-        List<BindingDTO> bindings = bindingServiceImpl.getBindingsByIds(departmentId, jobId, employeeId);
+        List<BindingDTO> bindings = bindingServiceImpl.getBindingsByIds(departmentId, employeeId);
         return ResponseEntity.ok(bindings);
     }
 
@@ -75,9 +74,8 @@ public class BindingController {
     @DeleteMapping("/department/{departmentId}/job/{jobId}/employee/{employeeId}")
     public ResponseEntity<Void> deleteBindingsByIds(
             @PathVariable Long departmentId,
-            @PathVariable Long jobId,
             @PathVariable Long employeeId) {
-        bindingServiceImpl.deleteBindingsByIds(departmentId, jobId, employeeId);
+        bindingServiceImpl.deleteBindingsByIds(departmentId, employeeId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

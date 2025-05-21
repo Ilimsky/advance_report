@@ -17,13 +17,9 @@ public class Sked {
     private Department department;
 
     @ManyToOne
-    private Job job;
-
-    @ManyToOne
     private Employee employee;
 
     private Long departmentIdentifier;
-    private Long jobIdentifier;
     private Long employeeIdentifier;
 
     private LocalDate dateReceived;
@@ -34,6 +30,5 @@ public class Sked {
     private String measure;
     private Double price;
     private String place;
-
     private String comments;
 }

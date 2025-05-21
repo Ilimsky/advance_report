@@ -19,7 +19,7 @@ public class Binding {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToOne
-    @JoinColumn(name = "job_id")
-    private Job job;
+//    @ManyToOne
+//    @JoinColumn(name = "job_id")
+//    private Job job;
 }

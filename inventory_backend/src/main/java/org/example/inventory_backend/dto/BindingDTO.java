@@ -11,5 +11,4 @@ public class BindingDTO {
     private Long id;
     private EmployeeDTO employee;
     private DepartmentDTO department;
-    private JobDTO job;
 }

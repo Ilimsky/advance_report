@@ -13,11 +13,9 @@ public class SkedDTO {
 
     private Long id;
     private Long departmentId;
-    private Long jobId;
     private Long employeeId;
 
     private Long departmentIdentifier;
-    private Long jobIdentifier;
     private Long employeeIdentifier;
 
     private LocalDate dateReceived;
@@ -28,6 +26,5 @@ public class SkedDTO {
     private String measure;
     private Double price;
     private String place;
-
     private String comments;
 }
