@@ -1,5 +1,7 @@
 package org.example.inventory_backend.dto;
 
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +19,8 @@ public class SkedDTO {
 
     private Long departmentIdentifier;
     private Long employeeIdentifier;
+
+    private String assetCategory;
 
     private LocalDate dateReceived;
     private int skedNumber;

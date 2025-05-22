@@ -98,19 +98,18 @@ public class SkedServiceImpl implements SkedService {
 
         Department department = departmentRepository.findById(updatedSkedDTO.getDepartmentId())
                 .orElseThrow(() -> new EntityNotFoundException("Department", updatedSkedDTO.getDepartmentId()));
-
-
         Employee employee = employeeRepository.findById(updatedSkedDTO.getEmployeeId())
                 .orElseThrow(() -> new EntityNotFoundException("Employee", updatedSkedDTO.getEmployeeId()));
 
-        existingSked.setSkedNumber(updatedSkedDTO.getSkedNumber());
+        // Обновление базовых полей
         existingSked.setDepartment(department);
         existingSked.setEmployee(employee);
-
         existingSked.setDepartmentIdentifier(updatedSkedDTO.getDepartmentIdentifier());
         existingSked.setEmployeeIdentifier(updatedSkedDTO.getEmployeeIdentifier());
 
+        existingSked.setAssetCategory(updatedSkedDTO.getAssetCategory());
         existingSked.setDateReceived(updatedSkedDTO.getDateReceived());
+        existingSked.setSkedNumber(updatedSkedDTO.getSkedNumber());
         existingSked.setItemName(updatedSkedDTO.getItemName());
         existingSked.setSerialNumber(updatedSkedDTO.getSerialNumber());
         existingSked.setCount(updatedSkedDTO.getCount());
@@ -122,6 +121,7 @@ public class SkedServiceImpl implements SkedService {
         Sked updatedSked = skedRepository.save(existingSked);
         return skedMapper.toDTO(updatedSked);
     }
+
 
 
     @Override

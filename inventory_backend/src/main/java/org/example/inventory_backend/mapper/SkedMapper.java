@@ -11,11 +11,12 @@ public class SkedMapper {
         dto.setId(sked.getId());
         dto.setDepartmentId(sked.getDepartment().getId());
         dto.setEmployeeId(sked.getEmployee().getId());
-        dto.setSkedNumber(sked.getSkedNumber());
         dto.setDepartmentIdentifier(sked.getDepartmentIdentifier());
         dto.setEmployeeIdentifier(sked.getEmployeeIdentifier());
 
+        dto.setAssetCategory(sked.getAssetCategory());
         dto.setDateReceived(sked.getDateReceived());
+        dto.setSkedNumber(sked.getSkedNumber());
         dto.setItemName(sked.getItemName());
         dto.setSerialNumber(sked.getSerialNumber());
         dto.setCount(sked.getCount());
@@ -35,6 +36,7 @@ public class SkedMapper {
         sked.setEmployeeIdentifier(dto.getEmployeeIdentifier());
 
         // Новые поля
+        sked.setAssetCategory(dto.getAssetCategory());
         sked.setDateReceived(dto.getDateReceived());
         sked.setItemName(dto.getItemName());
         sked.setSerialNumber(dto.getSerialNumber());

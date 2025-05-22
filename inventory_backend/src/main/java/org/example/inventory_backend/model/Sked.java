@@ -22,6 +22,8 @@ public class Sked {
     private Long departmentIdentifier;
     private Long employeeIdentifier;
 
+    private String assetCategory;
+
     private LocalDate dateReceived;
     private int skedNumber;
     private String itemName;

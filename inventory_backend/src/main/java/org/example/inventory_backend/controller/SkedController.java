@@ -34,7 +34,7 @@ public class SkedController {
         return new ResponseEntity<>(createdSked, HttpStatus.CREATED);
     }
 
-    @GetMapping("/department/{departmentId}/job/{jobId}/employee/{employeeId}")
+    @GetMapping("/department/{departmentId}/employee/{employeeId}")
     public ResponseEntity<List<SkedDTO>> getSkedsByIds(@PathVariable Long departmentId,
 
                                                          @PathVariable Long employeeId) {
@@ -66,7 +66,7 @@ public class SkedController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/department/{departmentId}/job/{jobId}/employee/{employeeId}")
+    @DeleteMapping("/department/{departmentId}/employee/{employeeId}")
     public ResponseEntity<Void> deleteSkedsByIds(@PathVariable Long departmentId,
                                                    @PathVariable Long employeeId) {
         skedServiceImpl.deleteSkedsByIds(departmentId, employeeId);
