@@ -21,44 +21,4 @@ public class RevizorServiceImpl extends GenericServiceImpl<Revizor, RevizorDTO, 
         entity.setName(dto.getName());
     }
 
-//    private final RevizorRepository revizorRepository;
-//    private final RevizorMapper revizorMapper;
-//
-//    @Autowired
-//    public RevizorServiceImpl(RevizorRepository revizorRepository, RevizorMapper revizorMapper) {
-//        this.revizorRepository = revizorRepository;
-//        this.revizorMapper = revizorMapper;
-//    }
-//    @Override
-//    public List<RevizorDTO> getAllRevizors() {
-//        return revizorRepository.findAll()
-//                .stream()
-//                .map(revizorMapper::toDTO)
-//                .collect(Collectors.toList());
-//    }
-//    @Override
-//    public RevizorDTO createRevizor(RevizorDTO revizorDTO) {
-//        Revizor revizor = revizorMapper.toEntity(revizorDTO);
-//        Revizor savedRevizor = revizorRepository.save(revizor);
-//        return revizorMapper.toDTO(savedRevizor);
-//    }
-//    @Override
-//    public Optional<RevizorDTO> getRevizorById(Long id) {
-//        return revizorRepository.findById(id)
-//                .map(revizorMapper::toDTO);
-//    }
-//    @Override
-//    public void deleteRevizor(Long id) {
-//        revizorRepository.deleteById(id);
-//    }
-//    @Override
-//    public RevizorDTO updateRevizor(Long id, RevizorDTO revizorDTO) {
-//        Revizor revizor = revizorRepository.findById(id)
-//                .orElseThrow(() -> new RevizorNotFoundException("Revizor not found"));
-//
-//        revizor.setName(revizorDTO.getName());
-//
-//        Revizor updatedRevizor = revizorRepository.save(revizor);
-//        return revizorMapper.toDTO(updatedRevizor);
-//    }
 }

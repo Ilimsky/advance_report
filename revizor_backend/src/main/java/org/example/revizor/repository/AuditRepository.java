@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface AuditRepository extends JpaRepository<Audit, Long> {
     @Query("SELECT a FROM Audit a WHERE a.department.id = :departmentId")
-    List<Audit> findByDepartmentId(@Param("departmentId") Long departmentId);
+    List<Audit> findByDepartmentById(@Param("departmentId") Long departmentId);
 
     @Query("SELECT a FROM Audit a WHERE a.department.id = :departmentId AND a.employee.id = :employeeId AND a.revizor.id = :revizorId")
     List<Audit> findByDepartmentAndEmployeeAndRevizor(

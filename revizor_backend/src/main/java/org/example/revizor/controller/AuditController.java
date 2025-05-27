@@ -49,6 +49,12 @@ public class AuditController {
         return ResponseEntity.ok(auditsByIds);
     }
 
+    @GetMapping("/department/{departmentId}")
+    public ResponseEntity<List<AuditDTO>> getAuditsByDepartment(@PathVariable Long departmentId) {
+        List<AuditDTO> audits = auditServiceImpl.getAuditsByDepartmentId(departmentId);
+        return ResponseEntity.ok(audits);
+    }
+
     @GetMapping("/{auditId}")
     public ResponseEntity<AuditDTO> getAuditById(@PathVariable Long auditId) {
         Optional<AuditDTO> auditById = Optional.ofNullable(auditServiceImpl.getAuditById(auditId));

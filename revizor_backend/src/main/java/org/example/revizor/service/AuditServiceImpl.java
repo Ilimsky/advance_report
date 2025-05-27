@@ -46,7 +46,7 @@ public class AuditServiceImpl  implements AuditService {
         Revizor revizor = revizorRepository.findById(auditDTO.getRevizorId())
                 .orElseThrow(() -> new EntityNotFoundException("Revizor", auditDTO.getRevizorId()));  // Исправлено: было departmentId
 
-        List<Audit> audits = auditRepository.findByDepartmentId(auditDTO.getDepartmentId());
+        List<Audit> audits = auditRepository.findByDepartmentById(auditDTO.getDepartmentId());
         int nextAuditNumber = audits.size() + 1;
 
         Audit audit = auditMapper.toEntity(auditDTO, department, employee, revizor);
@@ -76,6 +76,14 @@ public class AuditServiceImpl  implements AuditService {
         }
         // Используем новый метод с фильтрацией по всем трем ID
         return auditRepository.findByDepartmentAndEmployeeAndRevizor(departmentId, employeeId, revizorId)
+                .stream()
+                .map(auditMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AuditDTO> getAuditsByDepartmentId(Long departmentId) {
+        return auditRepository.findByDepartmentById(departmentId)
                 .stream()
                 .map(auditMapper::toDTO)
                 .collect(Collectors.toList());
