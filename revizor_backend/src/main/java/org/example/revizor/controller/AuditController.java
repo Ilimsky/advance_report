@@ -6,6 +6,7 @@ import org.example.revizor.service.AuditServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ public class AuditController {
         return ResponseEntity.ok(audits);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
     @PostMapping
     public ResponseEntity<AuditDTO> createAudit(@RequestBody @Valid AuditDTO auditDTO, BindingResult result) {
         // Проверка ошибок валидации
@@ -61,6 +63,7 @@ public class AuditController {
         return auditById.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
     @PutMapping("/{auditId}")
     public ResponseEntity<AuditDTO> updateAudit(@PathVariable Long auditId, @RequestBody @Valid AuditDTO updatedAuditDTO, BindingResult result) {
         if (result.hasErrors()) {
@@ -70,12 +73,14 @@ public class AuditController {
         return new ResponseEntity<>(updatedAudit, HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
     @DeleteMapping("/{auditId}")
     public ResponseEntity<Void> deleteAudit(@PathVariable Long auditId) {
         auditServiceImpl.deleteAudit(auditId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'SUPERADMIN')")
     @DeleteMapping("/department/{departmentId}/employee/{employeeId}/revizor/{revizorId}")
     public ResponseEntity<Void> deleteAuditsByIds(@PathVariable Long departmentId,
                                                   @PathVariable Long employeeId,
