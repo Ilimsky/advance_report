@@ -15,6 +15,7 @@ public class SkedDTO {
 
     private Long id;
     private Long departmentId;
+    private String departmentName;
     private Long employeeId;
 
     private Long departmentIdentifier;
@@ -23,7 +24,7 @@ public class SkedDTO {
     private String assetCategory;
 
     private LocalDate dateReceived;
-    private int skedNumber;
+    private String skedNumber;
     private String itemName;
     private String serialNumber;
     private int count;

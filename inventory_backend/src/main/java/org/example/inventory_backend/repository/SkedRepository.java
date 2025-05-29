@@ -14,6 +14,8 @@ public interface SkedRepository extends JpaRepository<Sked, Long> {
     List<Sked> findByDepartmentById(@Param("departmentId") Long departmentId);
 
     @Query("SELECT COUNT(r) > 0 FROM Sked r WHERE r.skedNumber = :skedNumber AND r.department.id = :departmentId")
-    boolean existsBySkedNumberAndDepartment_Id(@Param("skedNumber") String skedNumber,
-                                               @Param("departmentId") Long departmentId);
+    boolean existsBySkedNumberAndDepartment_Id(
+            @Param("skedNumber") String skedNumber,
+            @Param("departmentId") Long departmentId
+    );
 }

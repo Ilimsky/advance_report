@@ -33,27 +33,40 @@ public class SkedServiceImpl implements SkedService {
         Department department = departmentRepository.findById(skedDTO.getDepartmentId())
                 .orElseThrow(() -> new EntityNotFoundException("Department", skedDTO.getDepartmentId()));
         Employee employee = employeeRepository.findById(skedDTO.getEmployeeId())
-                .orElseThrow(() -> new EntityNotFoundException("Employee", skedDTO.getDepartmentId()));
+                .orElseThrow(() -> new EntityNotFoundException("Employee", skedDTO.getEmployeeId()));
 
-        List<Sked> skeds = skedRepository.findByDepartmentById(skedDTO.getDepartmentId());
-        int nextSkedNumber = skeds.size() + 1;
+        // Получаем последний номер в этом отделе
+        List<Sked> existingSkeds = skedRepository.findByDepartmentById(skedDTO.getDepartmentId());
+        int nextNumber = existingSkeds.isEmpty() ? 1 : getNextSkedNumber(existingSkeds) + 1;
 
-        String formattedSkedNumber = String.format("%06d", nextSkedNumber);
+        // Форматируем номер: "IT/000001" (вместо "16/000001")
+        String formattedSkedNumber = String.format("%s/%04d", department.getName(), nextNumber);
 
-        boolean numberExists = skedRepository.existsBySkedNumberAndDepartment_Id(formattedSkedNumber, skedDTO.getDepartmentId());
-        if (numberExists) {
+        // Проверяем, не существует ли уже такой номер
+        if (skedRepository.existsBySkedNumberAndDepartment_Id(formattedSkedNumber, skedDTO.getDepartmentId())) {
             throw new ConflictException("Инвентарный номер " + formattedSkedNumber + " уже существует в этом отделе");
         }
 
-        if (nextSkedNumber > 999999) {
-            throw new IllegalStateException("Достигнут максимальный номер (999999) для отдела");
+        // Проверяем, не превышен ли лимит (9999)
+        if (nextNumber > 9_999) {
+            throw new IllegalStateException("Достигнут максимальный номер (9999) для отдела");
         }
 
+        // Создаем и сохраняем запись
         Sked sked = skedMapper.toEntity(skedDTO, department, employee);
-        sked.setSkedNumber(Integer.parseInt(formattedSkedNumber));
+        sked.setSkedNumber(formattedSkedNumber);
 
         Sked savedSked = skedRepository.save(sked);
         return skedMapper.toDTO(savedSked);
+    }
+
+    // Вспомогательный метод для извлечения последнего номера
+    private int getNextSkedNumber(List<Sked> skeds) {
+        return skeds.stream()
+                .map(s -> s.getSkedNumber().split("/")[1]) // извлекаем "000001" из "IT/000001"
+                .mapToInt(Integer::parseInt)
+                .max()
+                .orElse(0);
     }
 
     @Override
@@ -121,8 +134,6 @@ public class SkedServiceImpl implements SkedService {
         Sked updatedSked = skedRepository.save(existingSked);
         return skedMapper.toDTO(updatedSked);
     }
-
-
 
     @Override
     public void deleteSked(Long skedId) {

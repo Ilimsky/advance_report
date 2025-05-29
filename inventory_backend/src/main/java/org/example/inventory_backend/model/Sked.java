@@ -23,9 +23,8 @@ public class Sked {
     private Long employeeIdentifier;
 
     private String assetCategory;
-
     private LocalDate dateReceived;
-    private int skedNumber;
+    private String skedNumber;
     private String itemName;
     private String serialNumber;
     private int count;
