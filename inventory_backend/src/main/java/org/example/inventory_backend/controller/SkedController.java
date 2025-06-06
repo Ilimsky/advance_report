@@ -3,6 +3,9 @@ package org.example.inventory_backend.controller;
 import org.example.inventory_backend.dto.SkedDTO;
 import org.example.inventory_backend.service.SkedServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,25 +24,30 @@ public class SkedController {
         this.skedServiceImpl = skedServiceImpl;
     }
 
+    @GetMapping("/paged")
+    public ResponseEntity<Page<SkedDTO>> getAllSkedsPaged(@PageableDefault(size = 20) Pageable pageable) {
+        Page<SkedDTO> pagedSkeds = skedServiceImpl.getAllSkedsPaged(pageable);
+        return ResponseEntity.ok(pagedSkeds);
+    }
+
+    @GetMapping("/department/{departmentId}/paged")
+    public ResponseEntity<Page<SkedDTO>> getSkedsByDepartmentPaged(
+            @PathVariable Long departmentId,
+            @PageableDefault(size = 20) Pageable pageable) {
+        Page<SkedDTO> pagedSkeds = skedServiceImpl.getSkedsByDepartmentIdPaged(departmentId, pageable);
+        return ResponseEntity.ok(pagedSkeds);
+    }
+
     @GetMapping
     public ResponseEntity<List<SkedDTO>> getAllSkeds() {
         List<SkedDTO> skeds = skedServiceImpl.getAllSkeds();
         return ResponseEntity.ok(skeds);
     }
 
-
     @PostMapping
     public ResponseEntity<SkedDTO> createSked(@RequestBody SkedDTO skedDTO) {
         SkedDTO createdSked = skedServiceImpl.createSked(skedDTO);
         return new ResponseEntity<>(createdSked, HttpStatus.CREATED);
-    }
-
-    @GetMapping("/department/{departmentId}/employee/{employeeId}")
-    public ResponseEntity<List<SkedDTO>> getSkedsByIds(@PathVariable Long departmentId,
-
-                                                         @PathVariable Long employeeId) {
-        List<SkedDTO> skedsByIds = skedServiceImpl.getSkedsByIds(departmentId, employeeId);
-        return ResponseEntity.ok(skedsByIds);
     }
 
     @GetMapping("/{skedId}")
@@ -66,10 +74,21 @@ public class SkedController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/department/{departmentId}/employee/{employeeId}")
-    public ResponseEntity<Void> deleteSkedsByIds(@PathVariable Long departmentId,
-                                                   @PathVariable Long employeeId) {
-        skedServiceImpl.deleteSkedsByIds(departmentId, employeeId);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+
+
+
+//    @DeleteMapping("/department/{departmentId}/employee/{employeeId}")
+//    public ResponseEntity<Void> deleteSkedsByIds(@PathVariable Long departmentId,
+//                                                   @PathVariable Long employeeId) {
+//        skedServiceImpl.deleteSkedsByIds(departmentId, employeeId);
+//        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+//    }
+
+    //    @GetMapping("/department/{departmentId}/employee/{employeeId}")
+//    public ResponseEntity<List<SkedDTO>> getSkedsByIds(@PathVariable Long departmentId,
+//
+//                                                         @PathVariable Long employeeId) {
+//        List<SkedDTO> skedsByIds = skedServiceImpl.getSkedsByIds(departmentId, employeeId);
+//        return ResponseEntity.ok(skedsByIds);
+//    }
 }

@@ -5,6 +5,10 @@ import org.example.inventory_backend.dto.SkedDTO;
 import org.example.inventory_backend.exception.EntityNotFoundException;
 import org.example.inventory_backend.mapper.SkedMapper;
 import org.example.inventory_backend.model.*;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.example.inventory_backend.repository.SkedRepository;
 import org.example.inventory_backend.repository.DepartmentRepository;
@@ -26,6 +30,18 @@ public class SkedServiceImpl implements SkedService {
         this.departmentRepository = departmentRepository;
         this.employeeRepository = employeeRepository;
         this.skedMapper = skedMapper;
+    }
+
+    @Override
+    public Page<SkedDTO> getAllSkedsPaged(Pageable pageable) {
+        return skedRepository.findAll(pageable)
+                .map(skedMapper::toDTO);
+    }
+
+    @Override
+    public Page<SkedDTO> getSkedsByDepartmentIdPaged(Long departmentId, Pageable pageable) {
+        return skedRepository.findByDepartment_Id(departmentId, pageable)
+                .map(skedMapper::toDTO);
     }
 
     @Override
@@ -72,19 +88,6 @@ public class SkedServiceImpl implements SkedService {
     @Override
     public List<SkedDTO> getAllSkeds() {
         return skedRepository.findAll().stream()
-                .map(skedMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<SkedDTO> getSkedsByIds(Long departmentId, Long employeeId) {
-        if (!departmentRepository.existsById(departmentId)) {
-            throw new EntityNotFoundException("Department", departmentId);
-        }
-        if (!employeeRepository.existsById(employeeId)) {
-            throw new EntityNotFoundException("Employee", employeeId);
-        }
-        return skedRepository.findByDepartmentById(departmentId).stream()
                 .map(skedMapper::toDTO)
                 .collect(Collectors.toList());
     }
@@ -143,15 +146,32 @@ public class SkedServiceImpl implements SkedService {
         skedRepository.deleteById(skedId);
     }
 
-    @Override
-    public void deleteSkedsByIds(Long departmentId, Long employeeId) {
-        if (!departmentRepository.existsById(departmentId)) {
-            throw new EntityNotFoundException("Department", departmentId);
-        }
-        if (!employeeRepository.existsById(employeeId)) {
-            throw new EntityNotFoundException("Employee", employeeId);
-        }
-        List<Sked> skeds = skedRepository.findByDepartmentById(departmentId);
-        skedRepository.deleteAll(skeds);
-    }
+
+
+
+//    @Override
+//    public void deleteSkedsByIds(Long departmentId, Long employeeId) {
+//        if (!departmentRepository.existsById(departmentId)) {
+//            throw new EntityNotFoundException("Department", departmentId);
+//        }
+//        if (!employeeRepository.existsById(employeeId)) {
+//            throw new EntityNotFoundException("Employee", employeeId);
+//        }
+//        List<Sked> skeds = skedRepository.findByDepartmentById(departmentId);
+//        skedRepository.deleteAll(skeds);
+//    }
+
+
+//    @Override
+//    public List<SkedDTO> getSkedsByIds(Long departmentId, Long employeeId) {
+//        if (!departmentRepository.existsById(departmentId)) {
+//            throw new EntityNotFoundException("Department", departmentId);
+//        }
+//        if (!employeeRepository.existsById(employeeId)) {
+//            throw new EntityNotFoundException("Employee", employeeId);
+//        }
+//        return skedRepository.findByDepartmentById(departmentId).stream()
+//                .map(skedMapper::toDTO)
+//                .collect(Collectors.toList());
+//    }
 }
