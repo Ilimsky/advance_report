@@ -5,6 +5,7 @@ import org.example.reference_backend.service.BindingServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,8 +23,8 @@ public class BindingController {
         this.bindingServiceImpl = bindingServiceImpl;
     }
 
-    // Получение всех привязок сотрудников
     @GetMapping
+    @PreAuthorize("hasAnyRole('SUPERADMIN','ADMIN','USER')")
     public ResponseEntity<List<BindingDTO>> getAllBindings() {
         List<BindingDTO> bindings = bindingServiceImpl.getAllBindings();
         System.out.println("[DEBUG] Returning BindingDTO: " + bindings);
@@ -31,15 +32,15 @@ public class BindingController {
         return ResponseEntity.ok(bindings);
     }
 
-    // Создание новой привязки сотрудника
     @PostMapping
+    @PreAuthorize("hasAnyRole('SUPERADMIN','ADMIN')")
     public ResponseEntity<BindingDTO> createBinding(@RequestBody BindingDTO bindingDTO) {
         BindingDTO createdBinding = bindingServiceImpl.createBinding(bindingDTO);
         return new ResponseEntity<>(createdBinding, HttpStatus.CREATED);
     }
 
-    // Получение привязок сотрудников по ID департамента, должности и сотрудника
     @GetMapping("/department/{departmentId}/job/{jobId}/employee/{employeeId}")
+    @PreAuthorize("hasAnyRole('SUPERADMIN','ADMIN','USER')")
     public ResponseEntity<List<BindingDTO>> getBindingsByIds(
             @PathVariable Long departmentId,
             @PathVariable Long jobId,
@@ -48,15 +49,15 @@ public class BindingController {
         return ResponseEntity.ok(bindings);
     }
 
-    // Получение привязки сотрудника по ID
     @GetMapping("/{bindingId}")
+    @PreAuthorize("hasAnyRole('SUPERADMIN','ADMIN','USER')")
     public ResponseEntity<BindingDTO> getBindingById(@PathVariable Long bindingId) {
         Optional<BindingDTO> bindingDTO = Optional.ofNullable(bindingServiceImpl.getBindingById(bindingId));
         return bindingDTO.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // Обновление привязки сотрудника
     @PutMapping("/{bindingId}")
+    @PreAuthorize("hasAnyRole('SUPERADMIN','ADMIN')")
     public ResponseEntity<BindingDTO> updateBinding(
             @PathVariable Long bindingId,
             @RequestBody BindingDTO updatedBindingDTO) {
@@ -64,15 +65,15 @@ public class BindingController {
         return new ResponseEntity<>(updatedBinding, HttpStatus.OK);
     }
 
-    // Удаление привязки сотрудника по ID
     @DeleteMapping("/{bindingId}")
+    @PreAuthorize("hasRole('SUPERADMIN')")
     public ResponseEntity<Void> deleteBinding(@PathVariable Long bindingId) {
         bindingServiceImpl.deleteBinding(bindingId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    // Удаление привязок сотрудников по ID департамента, должности и сотрудника
     @DeleteMapping("/department/{departmentId}/job/{jobId}/employee/{employeeId}")
+    @PreAuthorize("hasRole('SUPERADMIN')")
     public ResponseEntity<Void> deleteBindingsByIds(
             @PathVariable Long departmentId,
             @PathVariable Long jobId,

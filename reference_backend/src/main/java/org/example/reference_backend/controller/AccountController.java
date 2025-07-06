@@ -2,6 +2,7 @@ package org.example.reference_backend.controller;
 
 import org.example.reference_backend.dto.AccountDTO;
 import org.example.reference_backend.service.AccountService;
+import org.example.reference_backend.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,43 +19,8 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class AccountController extends GenericController<AccountDTO, Long> {
 
+    @Autowired
     public AccountController(AccountService accountService) {
         super(accountService);
-    }
-
-    @Override
-    @PreAuthorize("hasAnyRole('SUPERADMIN','ADMIN','USER')")
-    @GetMapping
-    public ResponseEntity<List<AccountDTO>> getAll() {
-        return super.getAll();
-    }
-
-    @Override
-    @PreAuthorize("hasAnyRole('SUPERADMIN','ADMIN','USER')")
-    @GetMapping("/{id}")
-    public ResponseEntity<AccountDTO> getById(@PathVariable Long id) {
-        return super.getById(id);
-    }
-
-    @Override
-    @PreAuthorize("hasAnyRole('SUPERADMIN','ADMIN')")
-    @PostMapping
-    public ResponseEntity<AccountDTO> create(@RequestBody AccountDTO dto) {
-        return super.create(dto);
-    }
-
-    @Override
-    @PreAuthorize("hasAnyRole('SUPERADMIN','ADMIN')")
-    @PutMapping("/{id}")
-    public ResponseEntity<AccountDTO> update(@PathVariable Long id, @RequestBody AccountDTO dto) {
-        return super.update(id, dto);
-    }
-
-    @Override
-    @PreAuthorize("hasRole('SUPERADMIN')")
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        super.delete(id);
-        return ResponseEntity.noContent().build();
     }
 }
