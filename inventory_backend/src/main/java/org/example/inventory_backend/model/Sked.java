@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -17,10 +19,8 @@ public class Sked {
 
     @ManyToOne
     private Employee employee;
-
     private Long departmentIdentifier;
     private Long employeeIdentifier;
-
     private String assetCategory;
     private LocalDate dateReceived;
     private String skedNumber;
@@ -31,6 +31,9 @@ public class Sked {
     private Double price;
     private String place;
     private String comments;
+    private boolean available = false;
+    private boolean numberReleased = false; // Флаг того, что номер освобожден!
 
-    private boolean available;
+    @OneToMany(mappedBy = "sked", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SkedHistory> history = new ArrayList<>();
 }

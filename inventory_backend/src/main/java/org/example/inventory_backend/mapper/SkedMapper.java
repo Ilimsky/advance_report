@@ -26,6 +26,7 @@ public class SkedMapper {
         dto.setComments(sked.getComments());
 
         dto.setAvailable(sked.isAvailable());
+        dto.setNumberReleased(sked.isNumberReleased());
         return dto;
     }
 
@@ -49,6 +50,7 @@ public class SkedMapper {
         sked.setComments(dto.getComments());
 
         sked.setAvailable(dto.isAvailable());
+        sked.setNumberReleased(dto.isNumberReleased());
         return sked;
     }
 }

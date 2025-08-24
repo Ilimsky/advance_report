@@ -27,4 +27,16 @@ public interface SkedRepository extends JpaRepository<Sked, Long> {
     List<Sked> findByDepartmentById(@Param("departmentId") Long departmentId);
     @EntityGraph(attributePaths = {"department", "employee"})
     Page<Sked> findByDepartment_Id(Long departmentId, Pageable pageable);
+
+    // Новый метод: возвращает все используемые номера в филиале
+    @Query("SELECT s.skedNumber FROM Sked s WHERE s.department.id = :departmentId")
+    List<String> findAllNumbersByDepartment(@Param("departmentId") Long departmentId);
+
+    // Ищем только активные номера (у которых numberReleased = false)
+    @Query("SELECT s.skedNumber FROM Sked s WHERE s.department.id = :departmentId AND s.numberReleased = false")
+    List<String> findAllActiveNumbersByDepartment(@Param("departmentId") Long departmentId);
+
+    // В других методах тоже добавляем условие, если нужно показывать только активные
+    @Query("SELECT s FROM Sked s WHERE s.department.id = :departmentId AND s.numberReleased = false")
+    List<Sked> findActiveByDepartmentById(@Param("departmentId") Long departmentId);
 }

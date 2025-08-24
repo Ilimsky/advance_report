@@ -37,4 +37,7 @@ public class SkedDTO implements Serializable {
     private String comments;
 
     private boolean available;
+    private boolean isActive; // Новое поле
+
+    private boolean numberReleased = false; // Флаг того, что номер освобожден!
 }
