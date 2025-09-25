@@ -1,0 +1,16 @@
+package org.example.reference_backend.dto;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserDepartmentBindingDTO {
+    private Long id;
+    private UserDto user;
+    private DepartmentDTO department;
+
+}
