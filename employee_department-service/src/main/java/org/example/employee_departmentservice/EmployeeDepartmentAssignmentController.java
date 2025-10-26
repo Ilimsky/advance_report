@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/employee-departments")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class EmployeeDepartmentAssignmentController {
 
     private final EmployeeDepartmentAssignmentServiceImpl bindingServiceImpl;

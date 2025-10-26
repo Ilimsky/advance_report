@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/accounts")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class AccountController extends GenericController<AccountDTO, Long> {
 
     @Autowired

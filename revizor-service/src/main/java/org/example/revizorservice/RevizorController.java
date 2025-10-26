@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/revizors")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class RevizorController extends GenericController<RevizorDTO, Long> {
 
 

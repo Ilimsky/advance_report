@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/jobs")
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 public class JobController extends GenericController<JobDTO, Long> {
 
     @Autowired

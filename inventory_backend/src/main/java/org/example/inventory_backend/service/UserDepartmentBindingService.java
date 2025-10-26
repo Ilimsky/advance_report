@@ -1,7 +1,8 @@
-package com.example.backend.service;
+package org.example.inventory_backend.service;
 
 
-import com.example.backend.dto.UserDepartmentBindingDTO;
+
+import org.example.inventory_backend.dto.UserDepartmentBindingDTO;
 
 import java.util.List;
 

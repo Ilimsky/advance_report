@@ -26,5 +26,4 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     @Query("SELECT r FROM Report r WHERE r.department.id = :departmentId AND YEAR(r.dateReceived) = :year")
     @EntityGraph(attributePaths = {"department", "job", "employee", "account"})
     List<Report> findByDepartmentIdAndYear(@Param("departmentId") Long departmentId, @Param("year") int year);
-
 }

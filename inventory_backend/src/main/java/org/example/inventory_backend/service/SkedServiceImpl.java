@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.dockerjava.api.exception.ConflictException;
 import jakarta.transaction.Transactional;
 import org.example.inventory_backend.SkedWebSocketService;
+import org.example.inventory_backend.auth.CustomUserDetails;
 import org.example.inventory_backend.dto.SkedDTO;
 import org.example.inventory_backend.exception.EntityNotFoundException;
 import org.example.inventory_backend.mapper.SkedMapper;
@@ -15,12 +16,16 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.example.inventory_backend.repository.SkedRepository;
 import org.example.inventory_backend.repository.DepartmentRepository;
 import org.example.inventory_backend.repository.EmployeeRepository;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,8 +37,8 @@ public class SkedServiceImpl implements SkedService {
     private final SkedMapper skedMapper;
     private final SkedWebSocketService webSocketService;
     private final SkedHistoryRepository historyRepository;
-
     private final ObjectMapper objectMapper; // Для JSON сериализации
+    private final UserDepartmentBindingService bindingService;
 
     public SkedServiceImpl(SkedRepository skedRepository,
                            DepartmentRepository departmentRepository,
@@ -41,7 +46,8 @@ public class SkedServiceImpl implements SkedService {
                            SkedMapper skedMapper,
                            SkedWebSocketService webSocketService,
                            SkedHistoryRepository historyRepository,
-                           ObjectMapper objectMapper) {
+                           ObjectMapper objectMapper,
+                           UserDepartmentBindingService bindingService) {
         this.skedRepository = skedRepository;
         this.departmentRepository = departmentRepository;
         this.employeeRepository = employeeRepository;
@@ -49,6 +55,7 @@ public class SkedServiceImpl implements SkedService {
         this.webSocketService = webSocketService;
         this.historyRepository = historyRepository;
         this.objectMapper = objectMapper;
+        this.bindingService = bindingService;
     }
 
     private void saveHistory(Sked sked, String actionType, String reason) {
@@ -103,11 +110,22 @@ public class SkedServiceImpl implements SkedService {
     // ======================== Paged ============================
     @Override
     public Page<SkedDTO> getAllSkedsPaged(Pageable pageable) {
-        return skedRepository.findAll(pageable).map(skedMapper::toDTO);
+        if (isSuperAdmin() || isAdmin()) {
+            return skedRepository.findAll(pageable).map(skedMapper::toDTO);
+        } else if (isUser()) {
+            Long userDepartmentId = getUserDepartmentId();
+            if (userDepartmentId == null) {
+                return Page.empty();
+            }
+            return skedRepository.findByDepartment_Id(userDepartmentId, pageable)
+                    .map(skedMapper::toDTO);
+        }
+        return Page.empty();
     }
 
     @Override
     public Page<SkedDTO> getSkedsByDepartmentIdPaged(Long departmentId, Pageable pageable) {
+        checkUserAccessToDepartment(departmentId);
         return skedRepository.findByDepartment_Id(departmentId, pageable)
                 .map(skedMapper::toDTO);
     }
@@ -116,6 +134,12 @@ public class SkedServiceImpl implements SkedService {
     @Override
     @Transactional
     public SkedDTO createSked(SkedDTO skedDTO) {
+        if (isUser()) {
+            Long userDepartmentId = getUserDepartmentId();
+            if (userDepartmentId == null || !userDepartmentId.equals(skedDTO.getDepartmentId())) {
+                throw new AccessDeniedException("Пользователь может создавать записи только для своего филиала");
+            }
+        }
         Department department = departmentRepository.findById(skedDTO.getDepartmentId())
                 .orElseThrow(() -> new EntityNotFoundException("Department", skedDTO.getDepartmentId()));
         Employee employee = employeeRepository.findById(skedDTO.getEmployeeId())
@@ -134,13 +158,26 @@ public class SkedServiceImpl implements SkedService {
     // ======================== Get ============================
     @Override
     public List<SkedDTO> getAllSkeds() {
-        return skedRepository.findAll().stream()
-                .map(skedMapper::toDTO)
-                .collect(Collectors.toList());
+        if (isSuperAdmin() || isAdmin()) {
+            return skedRepository.findAll().stream()
+                    .map(skedMapper::toDTO)
+                    .collect(Collectors.toList());
+        } else if (isUser()) {
+            Long userDepartmentId = getUserDepartmentId();
+            if (userDepartmentId == null) {
+                return Collections.emptyList();
+            }
+            return skedRepository.findByDepartmentById(userDepartmentId)
+                    .stream()
+                    .map(skedMapper::toDTO)
+                    .collect(Collectors.toList());
+        }
+        return Collections.emptyList();
     }
 
     @Override
     public List<SkedDTO> getSkedsByDepartmentId(Long departmentId) {
+        checkUserAccessToDepartment(departmentId);
         return skedRepository.findByDepartmentById(departmentId)
                 .stream()
                 .map(skedMapper::toDTO)
@@ -151,6 +188,17 @@ public class SkedServiceImpl implements SkedService {
     public SkedDTO getSkedById(Long skedId) {
         Sked sked = skedRepository.findById(skedId)
                 .orElseThrow(() -> new EntityNotFoundException("Sked", skedId));
+
+        // SUPERADMIN и ADMIN имеют доступ ко всем записям
+        if (isSuperAdmin() || isAdmin()) {
+            // Доступ разрешен
+        } else if (isUser()) {
+            // USER может получить только записи своего филиала
+            checkUserAccessToDepartment(sked.getDepartment().getId());
+        } else {
+            throw new AccessDeniedException("Доступ запрещен");
+        }
+
         return skedMapper.toDTO(sked);
     }
 
@@ -158,6 +206,9 @@ public class SkedServiceImpl implements SkedService {
     @Override
     @Transactional
     public SkedDTO updateSked(Long skedId, SkedDTO updatedSkedDTO) {
+        if (!isAdmin() && !isSuperAdmin()) {
+            throw new AccessDeniedException("Только администраторы могут редактировать записи");
+        }
         Sked existingSked = skedRepository.findById(skedId)
                 .orElseThrow(() -> new EntityNotFoundException("Sked", skedId));
         Sked oldSked = skedRepository.findById(skedId)
@@ -210,6 +261,10 @@ public class SkedServiceImpl implements SkedService {
     }
 
     public void writeOffSked(Long skedId, String reason) {
+        if (!isSuperAdmin()) {
+            throw new AccessDeniedException("Только супер-администраторы могут списывать записи");
+        }
+
         Sked sked = skedRepository.findById(skedId)
                 .orElseThrow(() -> new EntityNotFoundException("Sked", skedId));
 
@@ -220,6 +275,9 @@ public class SkedServiceImpl implements SkedService {
     // Новый метод для перемещения с историей
     // В SkedServiceImpl
     public SkedDTO transferSked(Long skedId, Long newDepartmentId, String reason) {
+        if (!isAdmin() && !isSuperAdmin()) {
+            throw new AccessDeniedException("Только администраторы могут перемещать записи");
+        }
         Sked sked = skedRepository.findById(skedId)
                 .orElseThrow(() -> new EntityNotFoundException("Sked", skedId));
 
@@ -243,13 +301,15 @@ public class SkedServiceImpl implements SkedService {
     @Override
     @Transactional
     public void deleteSked(Long skedId) {
+        if (!isSuperAdmin()) {
+            throw new AccessDeniedException("Только супер-администраторы могут удалять записи");
+        }
+
         Sked sked = skedRepository.findById(skedId)
                 .orElseThrow(() -> new EntityNotFoundException("Sked", skedId));
 
-        // При удалении освобождаем номер (по сути, удаляя запись)
         skedRepository.delete(sked);
     }
-
     // ======================== Helper ============================
     private String generateNextNumber(Long departmentId, String departmentName) {
         List<String> numbers = skedRepository.findAllActiveNumbersByDepartment(departmentId);
@@ -279,6 +339,9 @@ public class SkedServiceImpl implements SkedService {
 
     @Transactional
     public void releaseSkedNumber(Long skedId) {
+        if (!isAdmin() && !isSuperAdmin()) {
+            throw new AccessDeniedException("Только администраторы могут освобождать номера");
+        }
         Sked sked = skedRepository.findById(skedId)
                 .orElseThrow(() -> new EntityNotFoundException("Sked", skedId));
 
@@ -287,5 +350,59 @@ public class SkedServiceImpl implements SkedService {
         sked.setSkedNumber(null); // Очищаем номер
 
         skedRepository.save(sked);
+    }
+
+    // === ДОБАВЛЕННЫЕ МЕТОДЫ ПРОВЕРКИ ПРАВ ===
+    private boolean hasRole(String role) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) {
+            return false;
+        }
+        return auth.getAuthorities().stream()
+                .anyMatch(a -> a.getAuthority().equals("ROLE_" + role));
+    }
+
+    private boolean isSuperAdmin() {
+        return hasRole("SUPERADMIN");
+    }
+
+    private boolean isAdmin() {
+        return hasRole("ADMIN") || isSuperAdmin();
+    }
+
+    private boolean isUser() {
+        return hasRole("USER");
+    }
+
+    private CustomUserDetails getCurrentUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null && auth.getPrincipal() instanceof CustomUserDetails) {
+            return (CustomUserDetails) auth.getPrincipal();
+        }
+        return null;
+    }
+
+    private Long getUserDepartmentId() {
+        if (isUser()) {
+            CustomUserDetails user = getCurrentUser();
+            if (user != null) {
+                // Используем тот же сервис, что и в ReportServiceImpl
+                Long departmentId = bindingService.getUserDepartmentId(user.getId());
+                if (departmentId == null) {
+                    throw new AccessDeniedException("Пользователь не привязан к филиалу");
+                }
+                return departmentId;
+            }
+        }
+        return null;
+    }
+
+    private void checkUserAccessToDepartment(Long departmentId) {
+        if (isUser()) {
+            Long userDepartmentId = getUserDepartmentId();
+            if (userDepartmentId == null || !userDepartmentId.equals(departmentId)) {
+                throw new AccessDeniedException("Доступ запрещён: можно работать только с данными своего филиала");
+            }
+        }
     }
 }

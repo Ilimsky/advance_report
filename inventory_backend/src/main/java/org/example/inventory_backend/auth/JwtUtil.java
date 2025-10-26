@@ -1,6 +1,5 @@
-package com.example.backend.auth;
+package org.example.inventory_backend.auth;
 
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
