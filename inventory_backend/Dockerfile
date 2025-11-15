@@ -1,5 +1,5 @@
 # Используем официальный образ с JDK 17
-FROM openjdk:17-jdk-slim-bullseye
+FROM eclipse-temurin:17-jre
 
 # Указываем рабочую директорию внутри контейнера
 WORKDIR /app
